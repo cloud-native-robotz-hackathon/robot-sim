@@ -37,7 +37,7 @@ To test the feasibility of developing a Webots controller that provides a Rest A
 
 * Clone this repository
 * Start Webots
-* Open the world: *File->Open World->simulations/hackathon_simulator/worlds/ hackathon_simulator.wbt*
+* Open the world: *File->Open World->simulations/hackathon_simulator/worlds/hackathon_simulator.wbt*
 * Start the simulation
 
 This will start the controller and will open the local port 3000/TCP. You can now use curl or whatever locally to control the robot. Try:
