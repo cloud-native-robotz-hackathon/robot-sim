@@ -22,7 +22,7 @@ You'll find Webots projects in the *simulations* folder.
 
 **hackathon_simulator** is going to be the production environment
 
-**gopigo** is an *attempt* to build a custom robot modelling the GoPiGo3 robot in Webots, work.
+**gopigo** is an *attempt* to build a custom robot modelling the GoPiGo3 robot in Webots.
 
 ## Testing the Hackathon Simulator
 
@@ -37,7 +37,7 @@ To test the feasibility of developing a Webots controller that provides a Rest A
 
 * Clone this repository
 * Start Webots
-* Open the world: *File->Open World->simulations/hackathon_simulator/worlds/hackathon_simulator.wbt
+* Open the world: *File->Open World->simulations/hackathon_simulator/worlds/* hackathon_simulator.wbt
 * Start the simulation
 
 This will start the controller and will open the local port 3000/TCP. You can now use curl or whatever locally to control the robot. Try:
@@ -54,3 +54,5 @@ And you should see the robot moving around in Webots.
 `$ curl http://localhost:3000/reset` will reset the simulation but keep it running.
 
 Look at the handler section in the controller code to see what API endpoints work already.
+
+Stop the simulation using the "PAUSE" button and reset when you want to start over using the "REWIND" button. And read the user guide, there is tons of information and tutorials there.
