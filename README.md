@@ -21,6 +21,7 @@ Installation is well documented in the user guide (https://cyberbotics.com/doc/g
 You'll find Webots projects in the *simulations* folder.
 
 **hackathon_simulator** is going to be the production environment
+
 **gopigo** is an *attempt* to build a custom robot modelling the GoPiGo3 robot in Webots, work.
 
 ## Testing the Hackathon Simulator
