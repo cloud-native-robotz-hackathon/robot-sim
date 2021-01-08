@@ -33,7 +33,7 @@ To test the feasibility of developing a Webots controller that provides a Rest A
 * Working Webots installation of course
 * The Python Tornado library: `$ sudo yum install python3-tornado -y`
 
-### Run It
+### Run it
 
 * Clone this repository
 * Start Webots
