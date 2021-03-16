@@ -4,8 +4,8 @@ WorldInfo {
   coordinateSystem "NUE"
 }
 Viewpoint {
-  orientation -0.7912116321506799 0.5928056497870595 0.15021855654345584 0.5763889749035449
-  position 0.2507242901903311 0.42158273207109276 0.8511037151297325
+  orientation -0.38540334016706035 0.8937907152111023 0.22935218069706564 1.1477129323152604
+  position 1.103951502046461 0.46996306824816586 0.2428918283120574
 }
 TexturedBackground {
 }
@@ -191,7 +191,7 @@ DEF blue Robot {
         }
       ]
       endPoint DEF EPUCK_RIGHT_WHEEL Solid {
-        translation 0.025999999999999978 0.02 0
+        translation 0.025999999999999992 0.02 0
         rotation -1 0 0 5.12514938360509
         children [
           Transform {
@@ -1772,7 +1772,7 @@ DEF red Robot {
         }
       ]
       endPoint DEF EPUCK_RIGHT_WHEEL Solid {
-        translation 0.025999999999999978 0.02 0
+        translation 0.025999999999999992 0.02 0
         rotation -1 0 0 5.12514938360509
         children [
           Transform {
@@ -3353,7 +3353,7 @@ DEF green Robot {
         }
       ]
       endPoint DEF EPUCK_RIGHT_WHEEL Solid {
-        translation 0.025999999999999978 0.02 0
+        translation 0.025999999999999992 0.02 0
         rotation -1 0 0 5.12514938360509
         children [
           Transform {
