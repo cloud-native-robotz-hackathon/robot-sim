@@ -26,19 +26,19 @@ port = robot.getCustomData()
 print("Port: ", port)
 
 # initialize sensors
-ps = []
-psNames = [
-    'ps0', 'ps1', 'ps2', 'ps3',
-    'ps4', 'ps5', 'ps6', 'ps7'
-]
+# ps = []
+# psNames = [
+#     'ps0', 'ps1', 'ps2', 'ps3',
+#     'ps4', 'ps5', 'ps6', 'ps7'
+# ]
 
-for i in range(8):
-    ps.append(robot.getDevice(psNames[i]))
-    ps[i].enable(TIME_STEP)
+# for i in range(8):
+#     ps.append(robot.getDevice(psNames[i]))
+#     ps[i].enable(TIME_STEP)
 
 # initialize and set motor devices
-leftMotor = robot.getDevice('left wheel motor')
-rightMotor = robot.getDevice('right wheel motor')
+leftMotor = robot.getDevice('left wheel')
+rightMotor = robot.getDevice('right wheel')
 leftSensor = robot.getDevice("left wheel sensor")
 leftSensor.enable(TIME_STEP)
 rightSensor = robot.getDevice("right wheel sensor")
