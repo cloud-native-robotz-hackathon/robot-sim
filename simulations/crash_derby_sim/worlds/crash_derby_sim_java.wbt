@@ -1,0 +1,423 @@
+#VRML_SIM R2021a utf8
+WorldInfo {
+  basicTimeStep 24
+  FPS 30
+  optimalThreadCount 4
+  coordinateSystem "NUE"
+}
+Viewpoint {
+  orientation 0.9261155332720481 0.35606444992731046 0.12461190364564652 5.560580861105417
+  position -3.768481017138401 14.322077491795998 17.778284767157828
+  near 0.1
+  follow "Robot5"
+}
+TexturedBackgroundLight {
+  texture "noon_park_empty"
+  castShadows FALSE
+}
+Background {
+  skyColor [
+    0.960784 0.952941 0.956863
+  ]
+  luminosity 0.35
+}
+DEF ROBOT-1 SRRobot {
+  hidden position_0_0 59.99999972890404
+  hidden position_0_1 59.9999997398469
+  hidden position_0_2 -0.8916552019078274
+  hidden translation_15 0.19999998777297817 -0.00042262445506672326 0.00015287613797595196
+  hidden rotation_15 0.9999999990367938 -4.324760900687154e-05 7.4870967536224585e-06 2.790216402000742
+  hidden translation_17 -0.19999998767113247 -0.00042390785733290417 0.0001492860526217152
+  hidden rotation_17 0.9999999990382276 4.324675677729135e-05 -7.2981519704053695e-06 2.7986996763740755
+  hidden translation_19 1.1704591225125682e-06 -0.05166832208775267 -5.194077762560312e-06
+  hidden rotation_19 0.9932995527617234 0.009512692783351175 -0.11517598343131183 -1.2745039322648297
+  translation 4.259153602484947 -0.008721460326419295 -1.697949839515828
+  rotation 0.010145306250425716 0.9998968146639489 -0.010170191049023546 1.5730360535669863
+  controller "JavaController"
+  model "Robot1"
+  customData "3001"
+  flagColour 1 0 1
+  controllerArgs [
+    ""
+  ]
+}
+DEF ROBOT-2 SRRobot {
+  hidden position_0_0 0.8936298285679212
+  hidden position_0_1 0.9021131060594608
+  hidden position_0_2 -4.535386628504239e-07
+  hidden translation_15 0.1999999877729782 0.00026832917385768225 -0.0003605301624548781
+  hidden rotation_15 -0.9999999954045826 4.2849853963377025e-05 8.575969125216322e-05 0.9352667734887196
+  hidden translation_17 -0.1999999876711324 0.0002683302743279345 -0.00036053163646903826
+  hidden rotation_17 -0.9999999954045924 -4.2849808324408665e-05 -8.575960020496908e-05 0.9352667656558862
+  hidden translation_19 2.1846108255729746e-11 -0.051668810220544606 -5.546368734954399e-06
+  hidden rotation_19 0.057422376935804105 0.998341924739239 -0.004008981790176403 -0.13962955289378048
+  translation 4.188252509893369 -0.009791006032508182 0.03220080040950834
+  rotation 0.007969192250303733 0.999936490243279 -0.007969156469183123 1.5708635123703225
+  controller "JavaController"
+  model "Robot2"
+  customData "3002"
+  flagColour 1 1 0
+  controllerArgs [
+    ""
+  ]
+}
+DEF ROBOT-3 SRRobot {
+  hidden position_0_0 0.893629828575298
+  hidden position_0_1 0.902113106069602
+  hidden position_0_2 0.6482641513084543
+  hidden translation_15 0.19999998777297798 0.0002683291738550225 -0.0003605301624568573
+  hidden rotation_15 -0.9999999954045825 4.284985396339101e-05 8.575969125140009e-05 0.9352667734961069
+  hidden translation_17 -0.19999998767113217 0.0002683302743242781 -0.0003605316364717594
+  hidden rotation_17 -0.9999999954045923 -4.284980832444666e-05 -8.575960020395753e-05 0.9352667656660546
+  hidden translation_19 2.1844082098709805e-11 -0.05166881022054322 -5.546368737618934e-06
+  hidden rotation_19 -0.9999995441252504 0.0009526153645239123 -6.537016709809222e-05 -0.13136744144687298
+  translation 1.7907598350814975 -0.009791006032502103 -4.371492510000225
+  rotation 6.378809466104061e-06 0.9999682434722348 -0.007969442035934204 3.1400000511706763
+  controller "JavaController"
+  model "Robot3"
+  customData "3003"
+  flagColour 0.333333 0.666667 0
+  controllerArgs [
+    ""
+  ]
+}
+DEF ROBOT-4 SRRobot {
+  hidden position_0_0 0.8936298285752988
+  hidden position_0_1 0.9021131060696025
+  hidden position_0_2 0.6482641513060634
+  hidden translation_15 0.19999998777297812 0.0002683291738550223 -0.00036053016245685756
+  hidden rotation_15 -0.9999999954045827 4.284985396338961e-05 8.575969125139715e-05 0.9352667734961079
+  hidden translation_17 -0.1999999876711324 0.0002683302743242781 -0.00036053163647175977
+  hidden rotation_17 -0.9999999954045925 -4.2849808324431264e-05 -8.575960020392666e-05 0.9352667656660413
+  hidden translation_19 2.184487313261485e-11 -0.05166881022054311 -5.546368736730756e-06
+  hidden rotation_19 -0.9999995441252502 0.0009526153646329896 -6.537016717924121e-05 -0.13136744144692855
+  translation -0.018281164918501257 -0.00979100603250202 -4.324802510000226
+  rotation 6.378809466029589e-06 0.9999682434722348 -0.00796944203593469 3.14000005117068
+  controller "JavaController"
+  model "Robot4"
+  customData "3004"
+  flagColour 0 0 1
+  controllerArgs [
+    ""
+  ]
+}
+DEF ROBOT-5 SRRobot {
+  hidden position_0_0 0.893629303080536
+  hidden position_0_1 0.9021125805621152
+  hidden position_0_2 -0.6414290081268171
+  hidden translation_15 0.19999998777297828 0.00026832936331169755 -0.0003605300214512324
+  hidden rotation_15 -0.999999995404578 4.2849853725040724e-05 8.575974713089361e-05 0.9352662480013574
+  hidden translation_17 -0.19999998767113217 0.0002683304637863151 -0.00036053149546214146
+  hidden rotation_17 -0.9999999954045876 -4.284980808608135e-05 -8.575965608472594e-05 0.9352662401585702
+  hidden translation_19 2.184563641094428e-11 -0.05166881000951912 -5.5463893335883085e-06
+  hidden rotation_19 0.9999999999996441 2.5254969027443757e-07 8.04847737924883e-07 -0.03397998951953158
+  translation 1.6839799999371419 -0.009791006225959076 4.24229504227386
+  rotation 0.9999999999916696 4.522791273419573e-08 4.0815142447460135e-06 0.015939052835739865
+  controller "JavaController"
+  model "Robot5"
+  customData "3005"
+}
+DEF ROBOT-6 SRRobot {
+  hidden position_0_0 0.8936293030805358
+  hidden position_0_1 0.9021125805621153
+  hidden position_0_2 -6.485279338217918e-07
+  hidden translation_15 0.19999998777297834 0.0002683293633116979 -0.00036053002145123236
+  hidden rotation_15 -0.9999999954045778 4.284985372504083e-05 8.575974713089383e-05 0.9352662480013578
+  hidden translation_17 -0.1999999876711322 0.0002683304637863152 -0.0003605314954621415
+  hidden rotation_17 -0.9999999954045876 -4.284980808608121e-05 -8.575965608472563e-05 0.9352662401585702
+  hidden translation_19 2.1845858455549205e-11 -0.05166881000951905 -5.5463893335883085e-06
+  hidden rotation_19 0.2929328718899863 0.9561254228727963 -0.0038089765818519563 -0.02720393677735913
+  translation 4.147335042273859 -0.009791006225958687 1.7987300003749258
+  rotation 0.007969192243543491 0.9999364902433795 -0.007969156463358239 1.570863512494313
+  controller "JavaController"
+  model "Robot6"
+  customData "3006"
+}
+DEF ROBOT-7 SRRobot {
+  hidden position_0_0 0.8936293030805359
+  hidden position_0_1 0.9021125805621161
+  hidden position_0_2 -0.6414290081294284
+  hidden translation_15 0.19999998777297812 0.00026832936331169744 -0.0003605300214512323
+  hidden rotation_15 -0.9999999954045778 4.28498537250301e-05 8.575974713087234e-05 0.9352662480013475
+  hidden translation_17 -0.1999999876711326 0.00026833046378631534 -0.0003605314954621421
+  hidden rotation_17 -0.9999999954045876 -4.28498080860815e-05 -8.575965608472616e-05 0.9352662401585707
+  hidden translation_19 2.184608050015413e-11 -0.051668810009519076 -5.546389334476487e-06
+  hidden rotation_19 0.9999999999996441 2.525500220896525e-07 8.048472209016072e-07 -0.0339799895195193
+  translation -1.6592300000628595 -0.009791006225959048 4.206645042273861
+  rotation 0.9999999999916696 4.522791462368203e-08 4.081514252898515e-06 0.015939052835740406
+  controller "JavaController"
+  model "Robot7"
+  customData "3007"
+}
+DEF ROBOT-8 SRRobot {
+  hidden position_0_0 0.8936293030805356
+  hidden position_0_1 0.9021125805621147
+  hidden position_0_2 -0.6414290081250674
+  hidden translation_15 0.19999998777297828 0.0002683293633116978 -0.0003605300214512324
+  hidden rotation_15 -0.999999995404578 4.284985372503054e-05 8.575974713087324e-05 0.9352662480013461
+  hidden translation_17 -0.19999998767113217 0.0002683304637863154 -0.00036053149546214135
+  hidden rotation_17 -0.9999999954045876 -4.2849808086081214e-05 -8.575965608472571e-05 0.9352662401585697
+  hidden translation_19 2.1846122133517554e-11 -0.05166881000951909 -5.5463893335883085e-06
+  hidden rotation_19 0.9999999999996443 2.5254995889947856e-07 8.04848391552273e-07 -0.03397998951944133
+  translation 0.08567579993714085 -0.009791006225958826 4.2332850422738595
+  rotation 0.9999999999916696 4.522821671754704e-08 4.081514241751743e-06 0.015939052835741378
+  controller "JavaController"
+  model "Robot8"
+  customData "3008"
+}
+DEF ROBOT-9 SRRobot {
+  hidden position_0_0 0.8936293030805349
+  hidden position_0_1 0.9021125805621159
+  hidden position_0_2 5.164369069280646e-06
+  hidden translation_15 0.19999998777297828 0.000268329363311698 -0.00036053002145123203
+  hidden rotation_15 -0.9999999954045778 4.2849853725040724e-05 8.575974713089372e-05 0.9352662480013564
+  hidden translation_17 -0.19999998767113222 0.00026833046378631507 -0.00036053149546214167
+  hidden rotation_17 -0.9999999954045875 -4.28498080860655e-05 -8.575965608469413e-05 0.9352662401585574
+  hidden translation_19 2.184563641094428e-11 -0.051668810009519034 -5.546389335364665e-06
+  hidden rotation_19 -0.29293357413481724 0.9561251997760047 -0.003810970728926372 0.027203938031402954
+  translation -4.101885042273858 -0.009791006225958937 -1.0770399997767963
+  rotation -0.00796912963577863 0.9999364902238493 -0.007969221521434377 -1.5708632049716056
+  controller "JavaController"
+  model "Robot9"
+  customData "3009"
+}
+DEF ROBOT-10 SRRobot {
+  hidden position_0_0 0.8936293030805358
+  hidden position_0_1 0.9021125805621154
+  hidden position_0_2 5.360705992517751e-06
+  hidden translation_15 0.19999998777297845 0.0002683293633116978 -0.00036053002145123247
+  hidden rotation_15 -0.9999999954045778 4.284985372504007e-05 8.575974713089234e-05 0.9352662480013578
+  hidden translation_17 -0.19999998767113233 0.0002683304637863153 -0.00036053149546214184
+  hidden rotation_17 -0.9999999954045876 -4.284980808608134e-05 -8.575965608472591e-05 0.9352662401585702
+  hidden translation_19 2.184608050015413e-11 -0.05166881000951906 -5.5463893335883085e-06
+  hidden rotation_19 -0.2929333075686927 0.9561252814288991 -0.003810974858782213 0.027203935629494004
+  translation -4.127805042273853 -0.009791006225958965 0.4290790002492081
+  rotation -0.007969127196570128 0.9999364902432878 -0.007969221521579539 -1.570863511052582
+  controller "JavaController"
+  model "Robot10"
+  customData "3010"
+}
+DEF ROBOT-11 SRRobot {
+  hidden position_0_0 0.8936293030805353
+  hidden position_0_1 0.9021125805621149
+  hidden position_0_2 5.3607065666569635e-06
+  hidden translation_15 0.1999999877729781 0.0002683293633116977 -0.00036053002145123203
+  hidden rotation_15 -0.999999995404578 4.284985372503086e-05 8.575974713087385e-05 0.9352662480013461
+  hidden translation_17 -0.19999998767113233 0.00026833046378631545 -0.00036053149546214146
+  hidden rotation_17 -0.9999999954045877 -4.284980808608123e-05 -8.575965608472571e-05 0.9352662401585697
+  hidden translation_19 2.184608050015413e-11 -0.05166881000951902 -5.5463893335883085e-06
+  hidden rotation_19 -0.29293330756901304 0.9561252814288023 -0.0038109748584277043 0.027203935629513912
+  translation -4.089735042273853 -0.009791006225958937 1.8467100002492085
+  rotation -0.0079691271965702 0.9999364902432876 -0.007969221521579455 -1.5708635110525813
+  controller "JavaController"
+  model "Robot11"
+  customData "3011"
+}
+DEF ROBOT-12 SRRobot {
+  hidden position_0_0 0.8936293030805362
+  hidden position_0_1 0.9021125805621146
+  hidden position_0_2 0.6414290081273362
+  hidden translation_15 0.19999998777297828 0.00026832936331169766 -0.00036053002145123263
+  hidden rotation_15 -0.999999995404578 4.2849853725039883e-05 8.575974713089189e-05 0.9352662480013584
+  hidden translation_17 -0.19999998767113217 0.00026833046378631523 -0.00036053149546214124
+  hidden rotation_17 -0.9999999954045877 -4.284980808608065e-05 -8.57596560847246e-05 0.9352662401585697
+  hidden translation_19 2.184608050015413e-11 -0.05166881000951906 -5.546389334476487e-06
+  hidden rotation_19 0.999999999998843 1.4485133897252566e-07 -1.5141939861352812e-06 0.018041033790352667
+  translation -1.9770999999371415 -0.009791006225958965 -4.361775042273861
+  rotation 3.252739130197833e-08 0.9999682434924183 -0.00796944205618387 -3.141592652868909
+  controller "JavaController"
+  model "Robot12"
+  customData "3012"
+}
+DEF Arena Transform {
+  rotation 0 1 0 -1.5708
+  children [
+    Solid {
+      children [
+        Shape {
+          appearance PBRAppearance {
+            baseColor 0.729412 0.729412 0.729412
+            roughness 1
+            metalness 0
+          }
+          geometry Plane {
+            size 10 10
+          }
+          castShadows FALSE
+        }
+      ]
+      boundingObject Plane {
+        size 10 5
+      }
+      locked TRUE
+    }
+    Solid {
+      translation -5.075 0.15 0
+      children [
+        DEF SHAPE Shape {
+          appearance PBRAppearance {
+            baseColor 0.666667 0 0
+            roughness 1
+            metalness 0
+          }
+          geometry Box {
+            size 0.15 0.4 10
+          }
+          castShadows FALSE
+        }
+      ]
+      name "West Wall"
+      boundingObject USE SHAPE
+    }
+    Solid {
+      translation 5.075 0.15 0
+      children [
+        DEF SHAPE Shape {
+          appearance PBRAppearance {
+            baseColor 0.666667 0 0
+            roughness 1
+            metalness 0
+          }
+          geometry Box {
+            size 0.15 0.4 10
+          }
+          castShadows FALSE
+        }
+      ]
+      name "East Wall"
+      boundingObject USE SHAPE
+    }
+    Solid {
+      translation 0 0.15 5
+      children [
+        DEF SHAPE Shape {
+          appearance PBRAppearance {
+            baseColor 0.666667 0 0
+            roughness 1
+            metalness 0
+          }
+          geometry Box {
+            size 10.3 0.4 0.15
+          }
+          castShadows FALSE
+        }
+      ]
+      name "North Wall"
+      boundingObject USE SHAPE
+    }
+    Solid {
+      translation 0 0.15 -5
+      children [
+        DEF SHAPE Shape {
+          appearance PBRAppearance {
+            baseColor 0.666667 0 0
+            roughness 1
+            metalness 0
+          }
+          geometry Box {
+            size 10.3 0.4 0.15
+          }
+          castShadows FALSE
+        }
+      ]
+      name "South Wall"
+      boundingObject USE SHAPE
+    }
+    Solid {
+      children [
+        Shape {
+          appearance PBRAppearance {
+            baseColorMap ImageTexture {
+              url [
+                "textures/red-hat-webots.jpg"
+              ]
+            }
+            roughness 1
+            metalness 0
+          }
+          geometry Cylinder {
+            height 0.001
+            side FALSE
+          }
+          castShadows FALSE
+          isPickable FALSE
+        }
+      ]
+      name "solid(1)"
+    }
+    DEF obstacle Solid {
+      translation 0 0.15 -3
+      children [
+        DEF obstacle Shape {
+          appearance PBRAppearance {
+            baseColor 0.333333 0.333333 1
+            roughness 1
+            metalness 0
+          }
+          geometry Box {
+            size 2 0.4 0.15
+          }
+          castShadows FALSE
+        }
+      ]
+      name "South Wall(1)"
+      boundingObject USE obstacle
+    }
+    DEF obstacle Solid {
+      translation 0 0.15 3
+      children [
+        DEF obstacle Shape {
+          appearance PBRAppearance {
+            baseColor 0.333333 0.333333 1
+            roughness 1
+            metalness 0
+          }
+          geometry Box {
+            size 2 0.4 0.15
+          }
+          castShadows FALSE
+        }
+      ]
+      name "South Wall(3)"
+      boundingObject USE obstacle
+    }
+    DEF obstacle Solid {
+      translation -3 0.15 0
+      rotation 0 1 0 1.5708003061004252
+      children [
+        DEF obstacle Shape {
+          appearance PBRAppearance {
+            baseColor 0.333333 0.333333 1
+            roughness 1
+            metalness 0
+          }
+          geometry Box {
+            size 2 0.4 0.15
+          }
+          castShadows FALSE
+        }
+      ]
+      name "South Wall(2)"
+      boundingObject USE obstacle
+    }
+    DEF obstacle Solid {
+      translation 3 0.15 0
+      rotation 0 1 0 1.5708003061004252
+      children [
+        DEF obstacle Shape {
+          appearance PBRAppearance {
+            baseColor 0.333333 0.333333 1
+            roughness 1
+            metalness 0
+          }
+          geometry Box {
+            size 2 0.4 0.15
+          }
+          castShadows FALSE
+        }
+      ]
+      name "South Wall(4)"
+      boundingObject USE obstacle
+    }
+  ]
+}
