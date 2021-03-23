@@ -1,3 +1,4 @@
 *.wbproj
 *.cache
 scratch_dev
+*.class
