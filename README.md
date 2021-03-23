@@ -28,7 +28,15 @@ You'll find Webots projects in the *simulations* folder.
 
 To test the feasibility of developing a Webots controller that provides a Rest API to control a Webots robot from outside of Webots I've written a Python controller called *epuck_remote_tornado.py* using the Python Tornado library. It's more like a PoC but it works to control the epuck robot model. You can find the code in the *hackathon_simulator* project folder inside the *controller* folder.
 
-### Requirements
+
+### Requirements for the Java Controller
+Java 1.8 or higher installed
+Before starting webots, set the CLASSPATH variable like this :
+
+$  export CLASSPATH=/usr/lib/jvm/java/bin:*
+
+
+### Requirements for the Python Controller
 
 * Working Webots installation of course
 * The Python Tornado library: `$ sudo yum install python3-tornado -y`
