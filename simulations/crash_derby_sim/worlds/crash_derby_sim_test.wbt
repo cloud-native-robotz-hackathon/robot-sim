@@ -1,22 +1,129 @@
-#VRML_OBJ R2020a utf8
-PROTO SRRobot [
-  field SFVec3f translation 0 0 0
-  field SFRotation rotation 0 1 0 0
-  field SFString controller ""
-  field SFString model ""
-  field SFString customData ""
-  field SFColor flagColour 1 1 1
-  field MFString controllerArgs []
-  field SFBool synchronization FALSE
-]
-{
-  Robot {
-    selfCollision FALSE
-    translation IS translation
-    rotation IS rotation
-    controllerArgs IS controllerArgs
-    synchronization IS synchronization
-      children [
+#VRML_SIM R2021a utf8
+WorldInfo {
+  FPS 30
+  optimalThreadCount 4
+  coordinateSystem "NUE"
+}
+Viewpoint {
+  orientation 0.5690964908573755 0.7875473059891338 0.236428477394494 5.312347633488152
+  position -13.84599268676023 12.486229454483587 14.254665089504991
+  near 0.1
+}
+TexturedBackgroundLight {
+  texture "noon_park_empty"
+  castShadows FALSE
+}
+Background {
+  skyColor [
+    0.960784 0.952941 0.956863
+  ]
+  luminosity 0.35
+}
+DEF ROBOT-1 SRRobot {
+  hidden rotation_19 0.7224323253025228 -0.6771915339513006 0.1396537206904058 0.556127346142917
+  translation 4.20283 -0.00833618 -1.68521
+  rotation 0 1 0 1.5708
+  controller "simple_collision_avoid"
+  model "Robot1"
+  customData "3001"
+  flagColour 1 0 1
+  controllerArgs [
+    ""
+  ]
+}
+DEF ROBOT-2 SRRobot {
+  hidden rotation_19 -0.8615827506931316 0.10932331335601854 0.49570513096489005 2.766041088705275
+  translation 4.18834 -0.0084 0.0322008
+  rotation 0 1 0 1.5708
+  controller "simple_collision_avoid"
+  model "Robot2"
+  customData "3002"
+  flagColour 1 1 0
+  controllerArgs [
+    ""
+  ]
+}
+DEF ROBOT-3 SRRobot {
+  hidden rotation_19 -0.33667072296860373 0.39755643082052805 0.853581694162334 2.8305163249282517
+  translation 1.79076 -0.0084 -4.37158
+  rotation 0 1 0 3.14
+  controller "simple_collision_avoid"
+  model "Robot3"
+  customData "3003"
+  flagColour 0.333333 0.666667 0
+  controllerArgs [
+    ""
+  ]
+}
+DEF ROBOT-4 SRRobot {
+  hidden rotation_19 0.0384366105539957 0.988638879879219 0.1453127391534683 3.6531461100597356
+  translation -0.018281 -0.0084 -4.32489
+  rotation 0 1 0 3.14
+  controller "simple_collision_avoid"
+  model "Robot4"
+  customData "3004"
+  flagColour 0 0 1
+  controllerArgs [
+    ""
+  ]
+}
+DEF ROBOT-5 SRRobot {
+  hidden rotation_19 -0.00466277899271092 -0.9950484051751044 0.09928207215074762 3.234989528778028
+  translation 1.68398 0 4.24238
+  controller "simple_collision_avoid"
+  model "Robot5"
+  customData "3005"
+}
+DEF ROBOT-6 SRRobot {
+  hidden rotation_19 0.1566473358781574 -0.9366950270690536 0.3131517817710459 2.265229103166514
+  translation 4.14742 -4.44089e-15 1.79873
+  rotation 0 1 0 1.5708
+  controller "simple_collision_avoid"
+  model "Robot6"
+  customData "3006"
+}
+DEF ROBOT-7 SRRobot {
+  hidden rotation_19 -0.7507906832205283 -0.410487156159725 0.5175071445083188 4.215842028930928
+  translation -1.65923 -8.88178e-16 4.20673
+  controller "simple_collision_avoid"
+  model "Robot7"
+  customData "3007"
+}
+DEF ROBOT-8 SRRobot {
+  hidden rotation_19 0.007997351397457268 -0.984954205274806 0.17263040254283438 3.050397072478254
+  translation 0.0856758 0 4.23337
+  controller "simple_collision_avoid"
+  model "Robot8"
+  customData "3008"
+}
+DEF ROBOT-9 SRRobot {
+  hidden rotation_19 -0.14199511801826167 -0.18735953729868585 0.9719741715921273 3.196321471631828
+  translation -4.10197 8.88178e-16 -1.07704
+  rotation 0 1 0 -1.5707996938995747
+  controller "simple_collision_avoid"
+  model "Robot9"
+  customData "3009"
+}
+DEF ROBOT-10 SRRobot {
+  hidden rotation_19 0.9991580106806491 -0.02308980934312691 0.033913572462742056 1.9468708521872036
+  translation -4.12789 8.88178e-16 0.429079
+  rotation 0 1 0 -1.5708
+  controller "simple_collision_avoid"
+  model "Robot10"
+  customData "3010"
+}
+DEF ROBOT-11 SRRobot {
+  hidden rotation_19 -0.03978243974192043 0.9991775708913075 0.007844699862134132 0.38969684957634704
+  translation -4.08982 2.66454e-15 1.84671
+  rotation 0 1 0 -1.5708
+  controller "simple_collision_avoid"
+  model "Robot11"
+  customData "3011"
+}
+DEF ROBOT-12 Robot {
+  translation -1.9771 -3.55271e-15 -4.36186
+  rotation 0 1 0 -3.141592653589793
+  children [
     DEF bump_sensors Group {
       children [
         TouchSensor {
@@ -35,7 +142,6 @@ PROTO SRRobot [
           ]
           name "front bump sensor"
           boundingObject Transform {
-            translation 0 0 0
             children [
               Box {
                 size 0.14 0.01 0.03
@@ -45,7 +151,6 @@ PROTO SRRobot [
         }
         TouchSensor {
           translation 0 0.11 0.33
-          rotation 0 0 0 0
           children [
             Shape {
               appearance PBRAppearance {
@@ -59,7 +164,6 @@ PROTO SRRobot [
           ]
           name "back bump sensor"
           boundingObject Transform {
-            translation 0 0 0
             children [
               Box {
                 size 0.2 0.01 0.03
@@ -185,9 +289,6 @@ PROTO SRRobot [
       children [
         DEF left DistanceSensor {
           translation -0.155 0.17 0.21
-          type "sonar"
-          numberOfRays 10
-          aperture 0.3
           rotation 0 1 0 3.141
           children [
             Shape {
@@ -205,13 +306,12 @@ PROTO SRRobot [
             0 0 0
             2 1000 0
           ]
-        }
-        DEF right DistanceSensor {
-          translation 0.155 0.17 0.21
           type "sonar"
           numberOfRays 10
           aperture 0.3
-          rotation 0 0 0 0
+        }
+        DEF right DistanceSensor {
+          translation 0.155 0.17 0.21
           children [
             Shape {
               appearance PBRAppearance {
@@ -228,12 +328,12 @@ PROTO SRRobot [
             0 0 0
             2 1000 0
           ]
-        }
-        DEF back_right DistanceSensor {
-          translation 0.15 0.21 0.32
           type "sonar"
           numberOfRays 10
           aperture 0.3
+        }
+        DEF back_right DistanceSensor {
+          translation 0.15 0.21 0.32
           rotation 0 1 0 -1.57
           children [
             Shape {
@@ -251,12 +351,12 @@ PROTO SRRobot [
             0 0 0
             2 1000 0
           ]
-        }
-        DEF back_left DistanceSensor {
-          translation -0.15 0.21 0.32
           type "sonar"
           numberOfRays 10
           aperture 0.3
+        }
+        DEF back_left DistanceSensor {
+          translation -0.15 0.21 0.32
           rotation 0 1 0 -1.57
           children [
             Shape {
@@ -274,12 +374,12 @@ PROTO SRRobot [
             0 0 0
             2 1000 0
           ]
-        }
-        DEF front_right DistanceSensor {
-          translation 0.120925 0.17 -0.00995702
           type "sonar"
           numberOfRays 10
           aperture 0.3
+        }
+        DEF front_right DistanceSensor {
+          translation 0.120925 0.17 -0.00995702
           rotation 0 1 0 1.57
           children [
             Shape {
@@ -297,12 +397,12 @@ PROTO SRRobot [
             0 0 0
             2 1000 0
           ]
-        }
-        DEF front_left DistanceSensor {
-          translation -0.120382 0.17 -0.009993
           type "sonar"
           numberOfRays 10
           aperture 0.3
+        }
+        DEF front_left DistanceSensor {
+          translation -0.120382 0.17 -0.009993
           rotation 0 1 0 1.57
           children [
             Shape {
@@ -320,6 +420,9 @@ PROTO SRRobot [
             0 0 0
             2 1000 0
           ]
+          type "sonar"
+          numberOfRays 10
+          aperture 0.3
         }
       ]
     }
@@ -341,8 +444,8 @@ PROTO SRRobot [
             }
           ]
           endPoint Solid {
-            translation 0.19999998777297837 0.00026863610916181684 -0.00036030151878293246
-            rotation -0.9999999953968224 4.284946735166644e-05 8.585032564057752e-05 0.9344151591877564
+            translation 0.19999998777297753 0.0002686361091618158 -0.00036030151878293116
+            rotation -0.9999999953968224 4.284946735166587e-05 8.585032564057628e-05 0.9344151591877564
             children [
               DEF RIGHT_BLACK_CYLINDER_SHAPE Shape {
                 appearance PBRAppearance {
@@ -417,7 +520,6 @@ PROTO SRRobot [
               }
               DEF RIM_SHAPE Shape {
                 appearance PBRAppearance {
-                  baseColor IS flagColour
                   roughness 0.3
                   metalness 0
                 }
@@ -487,6 +589,7 @@ PROTO SRRobot [
         Solid {
           translation 0.19999998777297837 0.00026863610916181684 -0.00036030151878293246
           rotation -0.9999999953968224 4.284946735166644e-05 8.585032564057752e-05 0.9344151591877564
+          name "right wheel spacer"
           boundingObject DEF BOUNDING_WHEEL Group {
             children [
               Transform {
@@ -501,7 +604,6 @@ PROTO SRRobot [
               }
             ]
           }
-          name "right wheel spacer"
           physics Physics {
             density -1
             mass 0.001
@@ -523,7 +625,7 @@ PROTO SRRobot [
           ]
           endPoint Solid {
             translation -0.19999998767113233 0.00026863721059561843 -0.00036030299207660306
-            rotation -0.999999995396832 -4.284942171371578e-05 -8.585023441169805e-05 0.9344151521635337
+            rotation -0.999999995396832 -4.284942171371972e-05 -8.585023441170602e-05 0.9344151521635337
             children [
               DEF BLACK_CYLINDER_SHAPE Shape {
                 appearance PBRAppearance {
@@ -598,7 +700,6 @@ PROTO SRRobot [
               }
               DEF RIM_SHAPE Shape {
                 appearance PBRAppearance {
-                  baseColor IS flagColour
                   roughness 0.3
                   metalness 0
                 }
@@ -668,6 +769,7 @@ PROTO SRRobot [
         Solid {
           translation -0.19999998767113233 0.00026863721059561843 -0.00036030299207660306
           rotation -0.999999995396832 -4.284942171371578e-05 -8.585023441169805e-05 0.9344151521635337
+          name "left wheel spacer"
           boundingObject DEF BOUNDING_WHEEL Group {
             children [
               Transform {
@@ -682,7 +784,6 @@ PROTO SRRobot [
               }
             ]
           }
-          name "left wheel spacer"
           physics Physics {
             density -1
             mass 0.001
@@ -698,13 +799,12 @@ PROTO SRRobot [
             anchor 0 -0.052 0
           }
           endPoint Solid {
-            name "wheel"
             translation 0 -0.052 0
+            rotation 0.02651451820697465 0.8023401457875047 -0.5962778469656053 0.6400241923027903
             children [
               DEF CASTER_BALL Shape {
                 appearance PBRAppearance {
                   baseColor 0 0.0051864 0
-                  roughness 0.0
                   metalness 0
                 }
                 geometry DEF SPHERE Sphere {
@@ -713,6 +813,7 @@ PROTO SRRobot [
                 }
               }
             ]
+            name "wheel"
             boundingObject Sphere {
               radius 0.041
               subdivision 2
@@ -739,7 +840,6 @@ PROTO SRRobot [
           }
         }
       ]
-
     }
     DEF body_group Transform {
       children [
@@ -749,23 +849,21 @@ PROTO SRRobot [
               translation 0 0.25 0
               children [
                 Receiver {
-                  type "radio"
                   name "robot receiver"
-                  bufferSize 30
                   channel 1
-                  directionNoise 0.05
+                  bufferSize 30
                   signalStrengthNoise 0.03
+                  directionNoise 0.05
                 }
                 Emitter {
-                    type "radio"
-                    name "robot emitter"
-                    range 0.5
-                    maxRange 0.5
-                    channel 2
+                  name "robot emitter"
+                  range 0.5
+                  maxRange 0.5
+                  channel 2
                 }
                 Compass {
-                    name "robot compass"
-                    rotation 0 1 0 3.14
+                  rotation 0 1 0 3.14
+                  name "robot compass"
                 }
                 LED {
                   translation 0 0.1 0.085
@@ -775,7 +873,6 @@ PROTO SRRobot [
                         metalness 0
                         occlusionMapStrength 130
                         emissiveIntensity 10
-						baseColor IS flagColour
                       }
                       geometry Box {
                         size 0.005 0.1 0.15
@@ -971,7 +1068,6 @@ PROTO SRRobot [
               children [
                 DEF body Shape {
                   appearance PBRAppearance {
-                    baseColor IS flagColour
                     roughness 0.3
                     metalness 0
                   }
@@ -982,7 +1078,6 @@ PROTO SRRobot [
               ]
               boundingObject USE body_geo
               physics Physics {
-                density 1000
               }
             }
           ]
@@ -990,19 +1085,211 @@ PROTO SRRobot [
       ]
     }
   ]
-    name IS model
-    model IS model
-    boundingObject Transform {
-      translation 0 0.155 0.155
+  name "Robot12"
+  model "Robot12"
+  boundingObject Transform {
+    translation 0 0.155 0.155
+    children [
+      Shape {
+        geometry USE body_geo
+      }
+    ]
+  }
+  physics Physics {
+  }
+  controller "simple_collision_avoid"
+  customData "3012"
+  synchronization FALSE
+}
+DEF Arena Transform {
+  rotation 0 1 0 -1.5708
+  children [
+    Solid {
       children [
         Shape {
-          geometry USE body_geo
+          appearance PBRAppearance {
+            baseColor 0.729412 0.729412 0.729412
+            roughness 1
+            metalness 0
+          }
+          geometry Plane {
+            size 10 10
+          }
+          castShadows FALSE
         }
       ]
+      boundingObject Plane {
+        size 10 5
+      }
+      locked TRUE
     }
-    physics Physics {
+    Solid {
+      translation -5.075 0.15 0
+      children [
+        DEF SHAPE Shape {
+          appearance PBRAppearance {
+            baseColor 0.666667 0 0
+            roughness 1
+            metalness 0
+          }
+          geometry Box {
+            size 0.15 0.4 10
+          }
+          castShadows FALSE
+        }
+      ]
+      name "West Wall"
+      boundingObject USE SHAPE
     }
-    controller IS controller
-    customData IS customData
-  }
+    Solid {
+      translation 5.075 0.15 0
+      children [
+        DEF SHAPE Shape {
+          appearance PBRAppearance {
+            baseColor 0.666667 0 0
+            roughness 1
+            metalness 0
+          }
+          geometry Box {
+            size 0.15 0.4 10
+          }
+          castShadows FALSE
+        }
+      ]
+      name "East Wall"
+      boundingObject USE SHAPE
+    }
+    Solid {
+      translation 0 0.15 5
+      children [
+        DEF SHAPE Shape {
+          appearance PBRAppearance {
+            baseColor 0.666667 0 0
+            roughness 1
+            metalness 0
+          }
+          geometry Box {
+            size 10.3 0.4 0.15
+          }
+          castShadows FALSE
+        }
+      ]
+      name "North Wall"
+      boundingObject USE SHAPE
+    }
+    Solid {
+      translation 0 0.15 -5
+      children [
+        DEF SHAPE Shape {
+          appearance PBRAppearance {
+            baseColor 0.666667 0 0
+            roughness 1
+            metalness 0
+          }
+          geometry Box {
+            size 10.3 0.4 0.15
+          }
+          castShadows FALSE
+        }
+      ]
+      name "South Wall"
+      boundingObject USE SHAPE
+    }
+    Solid {
+      children [
+        Shape {
+          appearance PBRAppearance {
+            baseColorMap ImageTexture {
+              url [
+                "textures/red-hat-webots.jpg"
+              ]
+            }
+            roughness 1
+            metalness 0
+          }
+          geometry Cylinder {
+            height 0.001
+            side FALSE
+          }
+          castShadows FALSE
+          isPickable FALSE
+        }
+      ]
+      name "solid(1)"
+    }
+    DEF obstacle Solid {
+      translation 0 0.15 -3
+      children [
+        DEF obstacle Shape {
+          appearance PBRAppearance {
+            baseColor 0.333333 0.333333 1
+            roughness 1
+            metalness 0
+          }
+          geometry Box {
+            size 2 0.4 0.15
+          }
+          castShadows FALSE
+        }
+      ]
+      name "South Wall(1)"
+      boundingObject USE obstacle
+    }
+    DEF obstacle Solid {
+      translation 0 0.15 3
+      children [
+        DEF obstacle Shape {
+          appearance PBRAppearance {
+            baseColor 0.333333 0.333333 1
+            roughness 1
+            metalness 0
+          }
+          geometry Box {
+            size 2 0.4 0.15
+          }
+          castShadows FALSE
+        }
+      ]
+      name "South Wall(3)"
+      boundingObject USE obstacle
+    }
+    DEF obstacle Solid {
+      translation -3 0.15 0
+      rotation 0 1 0 1.5708003061004252
+      children [
+        DEF obstacle Shape {
+          appearance PBRAppearance {
+            baseColor 0.333333 0.333333 1
+            roughness 1
+            metalness 0
+          }
+          geometry Box {
+            size 2 0.4 0.15
+          }
+          castShadows FALSE
+        }
+      ]
+      name "South Wall(2)"
+      boundingObject USE obstacle
+    }
+    DEF obstacle Solid {
+      translation 3 0.15 0
+      rotation 0 1 0 1.5708003061004252
+      children [
+        DEF obstacle Shape {
+          appearance PBRAppearance {
+            baseColor 0.333333 0.333333 1
+            roughness 1
+            metalness 0
+          }
+          geometry Box {
+            size 2 0.4 0.15
+          }
+          castShadows FALSE
+        }
+      ]
+      name "South Wall(4)"
+      boundingObject USE obstacle
+    }
+  ]
 }

@@ -9,12 +9,12 @@ from controller import Robot, Motor, DistanceSensor
 # create the Robot instance.
 robot = Robot()
 
-max_wheel_speed = 1000
-num_dist_sensors = 8
-encoder_resolution = 159.23 # for wheel encoders
-tempo = 0.5  # Upper velocity bound = Fraction of the robot's maximum velocity = 1000 = 1 wheel revolution/sec  
-wheel_diameter = 4.1 # centimeters
-axle_length = 5.3 # centimeters
+# max_wheel_speed = 1000
+# num_dist_sensors = 8
+# encoder_resolution = 159.23 # for wheel encoders
+# tempo = 0.5  # Upper velocity bound = Fraction of the robot's maximum velocity = 1000 = 1 wheel revolution/sec  
+# wheel_diameter = 4.1 # centimeters
+# axle_length = 5.3 # centimeters
 
 #TIME_STEP = 64
 TIME_STEP = int(robot.getBasicTimeStep())

@@ -10,40 +10,20 @@ from controller import Robot, Motor, DistanceSensor
 # create the Robot instance.
 robot = Robot()
 
-max_wheel_speed = 1000
-num_dist_sensors = 8
-encoder_resolution = 159.23 # for wheel encoders
-tempo = 0.5  # Upper velocity bound = Fraction of the robot's maximum velocity = 1000 = 1 wheel revolution/sec  
-wheel_diameter = 4.1 # centimeters
-axle_length = 5.3 # centimeters
-
 #TIME_STEP = 64
 TIME_STEP = int(robot.getBasicTimeStep())
 MAX_SPEED = float(6)
-#ROBOT_ANGULAR_SPEED_IN_DEGREES = float(360)
-ROBOT_ANGULAR_SPEED_IN_DEGREES = float(283.588111888)
 
 port = robot.getCustomData()
 print("Port: ", port)
 
-# initialize sensors
-# ps = []
-# psNames = [
-#     'ps0', 'ps1', 'ps2', 'ps3',
-#     'ps4', 'ps5', 'ps6', 'ps7'
-# ]
-
-# for i in range(8):
-#     ps.append(robot.getDevice(psNames[i]))
-#     ps[i].enable(TIME_STEP)
-
 # init inertialunit
-inertialUnit = robot.getDevice('inertial unit')
-inertialUnit.enable(TIME_STEP)
+#inertialUnit = robot.getDevice('inertial unit')
+#inertialUnit.enable(TIME_STEP)
 
 # initialize and set motor devices
-leftMotor = robot.getDevice('left wheel')
-rightMotor = robot.getDevice('right wheel')
+leftMotor = robot.getDevice('left wheel motor')
+rightMotor = robot.getDevice('right wheel motor')
 leftSensor = robot.getDevice("left wheel sensor")
 leftSensor.enable(TIME_STEP)
 rightSensor = robot.getDevice("right wheel sensor")
@@ -86,40 +66,41 @@ class StopHandler(tornado.web.RequestHandler):
         rightMotor.setVelocity(0)
         self.write('OK')
 
-class LeftturnHandler(tornado.web.RequestHandler):
+class LefttimeHandler(tornado.web.RequestHandler):
     def get(self):
-        duration = 90 / ROBOT_ANGULAR_SPEED_IN_DEGREES
-        leftMotor.setVelocity(-MAX_SPEED)
-        rightMotor.setVelocity(MAX_SPEED)
+        leftMotor.setPosition(float('+inf'))
+        rightMotor.setPosition(float('+inf'))
         start_time = float(robot.getTime())
+        duration = 0.57
         end_time = start_time + duration
-        #print("START " + str(start_time))
-        #print("START " + str(end_time))
+        print("START " + str(start_time))
+        print("END " + str(end_time))
+        leftMotor.setVelocity(-6)
+        rightMotor.setVelocity(6)
         while float(robot.getTime()) < float(end_time):
-            #print("turning")
-            #print(float(robot.getTime()))
+            #leftMotor.setVelocity(-6)
+            #rightMotor.setVelocity(6)
             robot.step(TIME_STEP)
         leftMotor.setVelocity(0)
         rightMotor.setVelocity(0)
         self.write('OK')
 
-class TestHandler(tornado.web.RequestHandler):
+class LeftposHandler(tornado.web.RequestHandler):
     def get(self):
-        leftMotor.setVelocity(MAX_SPEED)
+        leftMotor.setVelocity(-MAX_SPEED)
         rightMotor.setVelocity(MAX_SPEED)
-        leftOffset = leftSensor.getValue()
-        rightOffset = rightSensor.getValue()
-        print("left: " + str(leftOffset) + " right: " + str(rightOffset))
-        leftMotor.setPosition(leftOffset + 10)
-        rightMotor.setPosition(rightOffset + 10)
-        #robot.step(TIME_STEP)
-        #leftOffset = leftSensor.getValue()
-        #rightOffset = rightSensor.getValue()
-        #print("left: " + str(leftOffset) + " right: " + str(rightOffset))
-        #print("left: " + str(leftSensor.getValue()) + " right: " + str(leftSensor.getValue()))
+        leftPos = leftSensor.getValue()
+        rightPos = rightSensor.getValue()
+        print("left: " + str(leftPos) + " right: " + str(rightPos))
+        lefttargetPos = leftPos + 10
+        righttargetPos = rightPos + 10
+        print("left: " + str(lefttargetPos) + " right: " + str(righttargetPos))
+        #while float(leftSensor.getValue()) < targetPos:
+        leftMotor.setPosition(lefttargetPos)
+        rightMotor.setPosition(righttargetPos)
         self.write('OK')
 
-class TestHandler(tornado.web.RequestHandler):
+class ForwardpHandler(tornado.web.RequestHandler):
     def get(self):
         leftMotor.setVelocity(MAX_SPEED)
         rightMotor.setVelocity(MAX_SPEED)
@@ -128,11 +109,6 @@ class TestHandler(tornado.web.RequestHandler):
         print("left: " + str(leftOffset) + " right: " + str(rightOffset))
         leftMotor.setPosition(leftOffset + 10)
         rightMotor.setPosition(rightOffset + 10)
-        #robot.step(TIME_STEP)
-        #leftOffset = leftSensor.getValue()
-        #rightOffset = rightSensor.getValue()
-        #print("left: " + str(leftOffset) + " right: " + str(rightOffset))
-        #print("left: " + str(leftSensor.getValue()) + " right: " + str(leftSensor.getValue()))
         self.write('OK')
 
 class PosHandler(tornado.web.RequestHandler):
@@ -145,19 +121,21 @@ class PosHandler(tornado.web.RequestHandler):
 
 class RightturnHandler(tornado.web.RequestHandler):
     def get(self):
-        duration = 90 / ROBOT_ANGULAR_SPEED_IN_DEGREES
-        leftMotor.setVelocity(MAX_SPEED)
-        rightMotor.setVelocity(-MAX_SPEED)
-        start_time = float(robot.getTime())
-        end_time = start_time + duration
+        #duration = 90 / ROBOT_ANGULAR_SPEED_IN_DEGREES
+        leftMotor.setVelocity(-MAX_SPEED)
+        rightMotor.setVelocity(MAX_SPEED)
+        leftMotor.setPosition(-10)
+        rightMotor.setPosition(10)
+        #start_time = float(robot.getTime())
+       # end_time = start_time + duration
         #print("START " + str(start_time))
         #print("START " + str(end_time))
-        while float(robot.getTime()) < float(end_time):
+        #while float(robot.getTime()) < float(end_time):
             #print("turning")
             #print(float(robot.getTime()))
-            robot.step(32)
-        leftMotor.setVelocity(0)
-        rightMotor.setVelocity(0)
+        #    robot.step(32)
+        #leftMotor.setVelocity(0)
+        #rightMotor.setVelocity(0)
         self.write('OK')
 
 class DistanceHandler(tornado.web.RequestHandler):
@@ -189,9 +167,10 @@ class Application(tornado.web.Application):
             (r"/?", MainHandler),
             (r"/forward/?", ForwardHandler),
             (r"/stop/?", StopHandler),
-            (r"/left/?", LeftturnHandler),
+            (r"/leftt/?", LefttimeHandler),
+            (r"/leftp/?", LeftposHandler),
             (r"/right/?", RightturnHandler),
-            (r"/test/?", TestHandler),
+            (r"/forwardp/?", ForwardpHandler),
             (r"/distance/?", DistanceHandler),
             (r"/getiu/?", IuHandler),
             (r"/pos/?", PosHandler),
