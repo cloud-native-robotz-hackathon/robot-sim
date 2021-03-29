@@ -66,6 +66,26 @@ class StopHandler(tornado.web.RequestHandler):
         rightMotor.setVelocity(0)
         self.write('OK')
 
+class TurndegreesHandler(tornado.web.RequestHandler):
+    def get(self):
+        deg = 90
+        axle_length = 0.32
+        radius_wheel = 0.0825
+        leftMotor.setVelocity(-MAX_SPEED)
+        rightMotor.setVelocity(MAX_SPEED)
+        leftPos = leftSensor.getValue()
+        rightPos = rightSensor.getValue()
+        # convert degree angle into radian
+        angle = deg * 3.1415926535 / 180
+        # calculate how much more the left wheel has to rotate vs the right, to turn that angle
+        detla_motor_pos = angle * axle_length / radius_wheel
+        # add and substract half of detla_motor_pos to current motor positions 
+        lefttargetPos = leftPos + detla_motor_pos / 2
+        righttargetPos = rightPos - detla_motor_pos / 2
+        leftMotor.setPosition(lefttargetPos)
+        rightMotor.setPosition(righttargetPos)
+        self.write('OK')
+
 class LefttimeHandler(tornado.web.RequestHandler):
     def get(self):
         leftMotor.setPosition(float('+inf'))
@@ -168,7 +188,7 @@ class Application(tornado.web.Application):
             (r"/forward/?", ForwardHandler),
             (r"/stop/?", StopHandler),
             (r"/leftt/?", LefttimeHandler),
-            (r"/leftp/?", LeftposHandler),
+            (r"/turn/?", TurndegreesHandler),
             (r"/right/?", RightturnHandler),
             (r"/forwardp/?", ForwardpHandler),
             (r"/distance/?", DistanceHandler),
