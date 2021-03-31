@@ -3,8 +3,8 @@ WorldInfo {
   coordinateSystem "NUE"
 }
 Viewpoint {
-  orientation -1 0 0 1.5707963267948966
-  position 0.0005558355844535609 5.697026724861683 1.2613036905340174e-06
+  orientation -0.06616102629732182 -0.9941727359501787 -0.08510751842593901 1.8256596628778177
+  position -1.910333795347774 0.3940368438688725 -0.5415595217962312
 }
 Background {
   skyColor [
@@ -119,8 +119,8 @@ Robot {
         }
       ]
       endPoint Solid {
-        translation -0.1603 0.0825 0
-        rotation 1 0 0 5.2408332
+        translation -0.15999964493089044 0.086202675097031 -4.617176717664126e-05
+        rotation 0.02932382899037081 -0.032574656528673085 -0.9990390406812852 0.00018557786028888026
         children [
           DEF WHEEL Transform {
             rotation 0 0 1 1.57
@@ -141,6 +141,8 @@ Robot {
         ]
         name "left wheel"
         boundingObject USE WHEEL
+        physics Physics {
+        }
       }
     }
     HingeJoint {
@@ -157,13 +159,15 @@ Robot {
         }
       ]
       endPoint Solid {
-        translation 0.1603 0.0825 0
-        rotation 0.9999999999999999 0 0 0.9226862300000003
+        translation 0.15999443470434616 0.08620305147015359 7.82622924822147e-06
+        rotation -0.010542116837843106 -0.018462225354581804 0.9997739794611249 0.00018651776985014604
         children [
           USE WHEEL
         ]
         name "right wheel"
         boundingObject USE WHEEL
+        physics Physics {
+        }
       }
     }
     Shape {
@@ -309,6 +313,9 @@ Robot {
         radius 0.219
       }
     ]
+  }
+  physics Physics {
+    mass 2
   }
   controller "crash_derby_remote_python"
   customData "3001"

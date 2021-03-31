@@ -31,8 +31,10 @@ rightSensor.enable(TIME_STEP)
 # Set to endless rotational motion
 #leftMotor.setPosition(float('+inf'))
 #rightMotor.setPosition(float('+inf'))
-leftMotor.setVelocity(0.0)
-rightMotor.setVelocity(0.0)
+#leftMotor.setVelocity(0.0)
+#rightMotor.setVelocity(0.0)
+#leftMotor.setVelocity(float('inf'))
+#rightMotor.setVelocity(float('inf'))
 
 class MainHandler(tornado.web.RequestHandler):
     def get(self):
@@ -71,8 +73,8 @@ class TurndegreesHandler(tornado.web.RequestHandler):
         deg = 90
         axle_length = 0.32
         radius_wheel = 0.0825
-        leftMotor.setVelocity(-MAX_SPEED)
-        rightMotor.setVelocity(MAX_SPEED)
+        #leftMotor.setVelocity(MAX_SPEED)
+        #rightMotor.setVelocity(MAX_SPEED)
         leftPos = leftSensor.getValue()
         rightPos = rightSensor.getValue()
         # convert degree angle into radian
@@ -82,6 +84,7 @@ class TurndegreesHandler(tornado.web.RequestHandler):
         # add and substract half of detla_motor_pos to current motor positions 
         lefttargetPos = leftPos + detla_motor_pos / 2
         righttargetPos = rightPos - detla_motor_pos / 2
+        print("left: " + str(lefttargetPos) + " right: " + str(righttargetPos))
         leftMotor.setPosition(lefttargetPos)
         rightMotor.setPosition(righttargetPos)
         self.write('OK')
