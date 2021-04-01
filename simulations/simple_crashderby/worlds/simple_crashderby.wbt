@@ -119,11 +119,12 @@ DEF PIONEER2 Robot {
         }
         PositionSensor {
           name "left wheel sensor"
+          resolution 0.1
         }
       ]
       endPoint Solid {
-        translation -0.15999964493089044 0.08620267519397377 -4.616399234265542e-05
-        rotation 0.04062261775147448 -0.03256072239121993 -0.9986438816136509 0.00018565129912292828
+        translation -0.15999964493089044 0.08620267519397377 -4.616399234265543e-05
+        rotation 0.04062261776627976 -0.032560722391200315 -0.9986438816130493 0.00018565129912292828
         children [
           DEF WHEEL Transform {
             rotation 0 0 1 1.57
@@ -160,11 +161,12 @@ DEF PIONEER2 Robot {
         }
         PositionSensor {
           name "right wheel sensor"
+          resolution 0.1
         }
       ]
       endPoint Solid {
         translation 0.15999443470434616 0.08620305145371553 7.834003203457236e-06
-        rotation 0.0007133523009344992 -0.01846429614303259 0.9998292658731476 0.0001865074529148203
+        rotation 0.0007133523418260524 -0.018464296143032053 0.9998292658731185 0.0001865074529148203
         children [
           USE WHEEL
         ]
@@ -321,7 +323,7 @@ DEF PIONEER2 Robot {
   physics Physics {
     mass 2
   }
-  controller "crash_derby_remote_python"
+  controller "JavaController"
   customData "3001"
 }
 DEF PIONEER3DX Robot {
@@ -1038,7 +1040,7 @@ DEF PIONEER3DX Robot {
         }
         PositionSensor {
           name "left wheel sensor"
-          resolution 1
+          resolution 0.1
         }
       ]
       endPoint Solid {
@@ -1316,7 +1318,7 @@ DEF PIONEER3DX Robot {
         }
         PositionSensor {
           name "right wheel sensor"
-          resolution 1
+          resolution 0.1
         }
       ]
       endPoint Solid {
@@ -3338,6 +3340,6 @@ DEF PIONEER3DX Robot {
       0 0.06 0.06
     ]
   }
-  controller "crash_derby_remote_python"
+  controller "JavaController"
   customData "3002"
 }

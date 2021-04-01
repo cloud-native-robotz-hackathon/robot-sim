@@ -2,3 +2,7 @@
 *.cache
 scratch_dev
 *.class
+.classpath
+*.prefs
+.project
+settings.json
