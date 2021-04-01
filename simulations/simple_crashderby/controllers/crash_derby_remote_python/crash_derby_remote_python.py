@@ -71,8 +71,8 @@ class StopHandler(tornado.web.RequestHandler):
 class TurndegreesHandler(tornado.web.RequestHandler):
     def get(self):
         deg = 90
-        axle_length = 0.32
-        radius_wheel = 0.0825
+        axle_length = 0.3
+        radius_wheel = 0.07
         #leftMotor.setVelocity(MAX_SPEED)
         #rightMotor.setVelocity(MAX_SPEED)
         leftPos = leftSensor.getValue()
