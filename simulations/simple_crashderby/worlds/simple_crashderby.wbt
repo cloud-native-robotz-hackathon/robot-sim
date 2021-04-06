@@ -3,8 +3,8 @@ WorldInfo {
   coordinateSystem "NUE"
 }
 Viewpoint {
-  orientation 0.26449326406634727 -0.9515224616538838 -0.1569978287482441 5.167683226280325
-  position 8.402345085911435 2.997795772852945 3.4548635710225555
+  orientation 0.38244957448844236 0.9169363204720813 0.11384246647332448 5.655387793603904
+  position -8.346008822419472 4.753988914602933 13.476817344828525
 }
 Background {
   skyColor [
@@ -3083,6 +3083,117 @@ DEF WALL Transform {
           }
         }
       ]
+      boundingObject USE WALL
+    }
+  ]
+}
+DEF WALL Transform {
+  translation -2 0.25 -2
+  children [
+    DEF WALL Solid {
+      children [
+        DEF WALL Shape {
+          appearance PBRAppearance {
+            baseColor 0.666667 0 0
+            roughness 1
+            metalness 0
+          }
+          geometry Box {
+            size 2 0.5 0.1
+          }
+        }
+      ]
+      name "solid(2)"
+      boundingObject USE WALL
+    }
+  ]
+}
+DEF WALL Transform {
+  translation 2 0.25 2
+  children [
+    DEF WALL Solid {
+      children [
+        DEF WALL Shape {
+          appearance PBRAppearance {
+            baseColor 0.666667 0 0
+            roughness 1
+            metalness 0
+          }
+          geometry Box {
+            size 2 0.5 0.1
+          }
+        }
+      ]
+      name "solid(1)"
+      boundingObject USE WALL
+    }
+  ]
+}
+DEF WALL Transform {
+  translation 2 0.25 2
+  rotation 0 1 0 1.5707996938995747
+  children [
+    DEF WALL Solid {
+      translation 1.98423 -1.41732e-05 -5.02212
+      rotation 0 0 1 4.692820414042842e-06
+      children [
+        DEF WALL Shape {
+          appearance PBRAppearance {
+            baseColor 0.666667 0 0
+            roughness 1
+            metalness 0
+          }
+          geometry Box {
+            size 2 0.5 0.1
+          }
+        }
+      ]
+      name "solid(4)"
+      boundingObject USE WALL
+    }
+  ]
+}
+DEF WALL Transform {
+  translation 2 0.25 2
+  rotation 0 1 0 1.5708003061004252
+  children [
+    DEF WALL Solid {
+      translation 1.98592 -1.95695e-05 1.04846
+      rotation 0 0 1 4.692820414042842e-06
+      children [
+        DEF WALL Shape {
+          appearance PBRAppearance {
+            baseColor 0.666667 0 0
+            roughness 1
+            metalness 0
+          }
+          geometry Box {
+            size 2 0.5 0.1
+          }
+        }
+      ]
+      name "solid(5)"
+      boundingObject USE WALL
+    }
+  ]
+}
+DEF WALL Transform {
+  translation -2 0.25 2
+  children [
+    DEF WALL Solid {
+      children [
+        DEF WALL Shape {
+          appearance PBRAppearance {
+            baseColor 0.666667 0 0
+            roughness 1
+            metalness 0
+          }
+          geometry Box {
+            size 2 0.5 0.1
+          }
+        }
+      ]
+      name "solid(3)"
       boundingObject USE WALL
     }
   ]
