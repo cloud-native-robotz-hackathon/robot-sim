@@ -1,10 +1,17 @@
 #VRML_SIM R2021a utf8
 WorldInfo {
   coordinateSystem "NUE"
+  contactProperties [
+    ContactProperties {
+      coulombFriction [
+        3
+      ]
+    }
+  ]
 }
 Viewpoint {
-  orientation 0.38244957448844236 0.9169363204720813 0.11384246647332448 5.655387793603904
-  position -8.346008822419472 4.753988914602933 13.476817344828525
+  orientation -0.10869307952291092 0.9557661995941538 0.27330712792968703 2.4151166360852705
+  position 6.800985740056138 4.624945662211588 -5.287190493825012
 }
 Background {
   skyColor [
@@ -3064,7 +3071,7 @@ DEF PIONEER3DX Robot {
       0 0.06 0.06
     ]
   }
-  controller "JavaController"
+  controller "crash_derby_remote_python"
   customData "3002"
 }
 DEF WALL Transform {

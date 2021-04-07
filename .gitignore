@@ -6,3 +6,4 @@ scratch_dev
 *.prefs
 .project
 settings.json
+*.bak
