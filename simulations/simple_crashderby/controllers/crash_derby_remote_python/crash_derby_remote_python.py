@@ -23,6 +23,7 @@ DRIVE_FACTOR = 12.2 # positions to meters
 TURN_FACTOR = 30 
 
 port = robot.getCustomData()
+robot_name = robot.getName()
 print("Port: ", port)
 
 # init inertialunit
@@ -36,6 +37,10 @@ leftSensor = robot.getDevice("left wheel sensor")
 leftSensor.enable(TIME_STEP)
 rightSensor = robot.getDevice("right wheel sensor")
 rightSensor.enable(TIME_STEP)
+
+# get and enable camera device
+camera = robot.getDevice('camera')
+camera.enable(TIME_STEP)
 # Set to endless rotational motion
 #leftMotor.setPosition(float('+inf'))
 #rightMotor.setPosition(float('+inf'))
@@ -47,11 +52,13 @@ rightSensor.enable(TIME_STEP)
 class MainHandler(tornado.web.RequestHandler):
     def get(self):
         self.write("Robot Ready!")
+        
 class StopHandler(tornado.web.RequestHandler):
     def get(self):
         leftMotor.setVelocity(0)
         rightMotor.setVelocity(0)
         self.write('OK')
+        
 class RightHandler(tornado.web.RequestHandler):
     def get(self, deg):
         lock.acquire()
@@ -71,6 +78,7 @@ class RightHandler(tornado.web.RequestHandler):
         rightMotor.setPosition(righttargetPos)
         lock.release()
         self.write('OK')
+
 class LeftHandler(tornado.web.RequestHandler):
     def get(self, deg):
         lock.acquire()
@@ -90,6 +98,7 @@ class LeftHandler(tornado.web.RequestHandler):
         rightMotor.setPosition(righttargetPos)
         lock.release()
         self.write('OK')
+
 class ForwardHandler(tornado.web.RequestHandler):
     def get(self, length):
         lock.acquire()
@@ -102,6 +111,7 @@ class ForwardHandler(tornado.web.RequestHandler):
         rightMotor.setPosition(rightOffset + float(length))
         lock.release()
         self.write('OK')
+
 class DistanceHandler(tornado.web.RequestHandler):
     def get(self):
         # read sensors outputs
@@ -112,6 +122,13 @@ class DistanceHandler(tornado.web.RequestHandler):
         sensor7 = str(psValues[7])
         self.write(sensor0 + "\n")
         self.write(sensor7 + "\n")
+        
+class GetImageHandler(tornado.web.RequestHandler):
+    def get(self):
+        image = camera.getImage()
+        camera.saveImage(robot_name + ".jpg", 100)
+        #self.write(image)
+
 class Application(tornado.web.Application):
     def __init__(self):
         handlers = [
@@ -120,6 +137,7 @@ class Application(tornado.web.Application):
             (r"/left/(\w+)", LeftHandler),
             (r"/right/(\w+)", RightHandler),
             (r"/forward/(\w+)", ForwardHandler),
+            (r"/image/?", GetImageHandler),
             (r"/distance/?", DistanceHandler)
         ]
         tornado.web.Application.__init__(self, handlers)
