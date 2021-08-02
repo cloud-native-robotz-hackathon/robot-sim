@@ -35,6 +35,9 @@ Before starting webots, set the CLASSPATH variable like this :
 
 $  export CLASSPATH=/usr/lib/jvm/java/bin:*
 
+In simulations/simple_crashderby/controllers/JavaController/jndi.properties replace
+ <AMQ BROKER ADDRESS> with the address of your amq broker 
+
 
 ### Requirements for the Python Controller
 

@@ -5,6 +5,21 @@
 // Modifications:
 
 // You may need to add other webots classes such as
+import java.util.concurrent.locks.ReentrantLock;
+
+import javax.jms.Connection;
+import javax.jms.ConnectionFactory;
+import javax.jms.Destination;
+import javax.jms.JMSException;
+import javax.jms.MessageConsumer;
+import javax.jms.MessageProducer;
+import javax.jms.Session;
+import javax.jms.TextMessage;
+import javax.json.bind.Jsonb;
+import javax.json.bind.JsonbBuilder;
+import javax.naming.Context;
+import javax.naming.InitialContext;
+
 import com.cyberbotics.webots.controller.Motor;
 import com.cyberbotics.webots.controller.PositionSensor;
 import com.cyberbotics.webots.controller.Robot;
@@ -34,6 +49,8 @@ public class JavaController {
   static double encoderUnit;
   static double distance = 0.0;
 
+  static ReentrantLock lock = new ReentrantLock();
+
   // This is the main function of your controller.
   // It creates an instance of your Robot instance and
   // it uses its function(s).
@@ -58,6 +75,136 @@ public class JavaController {
   private static void setMotorPositionWithOffset(Motor motor1, Motor motor2) {
     System.out.println("Current distance1 travelled -> " + String.valueOf(distance));
 
+  }
+
+  private static void forward(Robot robot, int timeStep, double worldDistance) {
+    lock.lock();
+    try {
+
+      worldDistance = worldDistance * DRIVE_FACTOR;
+
+      System.out.println("Action -> Forward " + worldDistance);
+
+      robotStep(robot, timeStep);
+
+      double offset1 = sensor1.getValue();
+      double offset2 = sensor2.getValue();
+      motor1.setPosition(offset1 + worldDistance);
+      motor2.setPosition(offset2 + worldDistance);
+      robotStep(robot, timeStep);
+
+      int loop = 0;
+      while ((sensor1.getValue() - offset1 < worldDistance && sensor2.getValue() - offset2 < worldDistance)
+          || loop >= ACTION_LOOP_TIMEOUT) {
+
+        robotStep(robot, timeStep);
+        printDistanceTravelled(sensor1.getValue() - offset1);
+        printDistanceTravelled(sensor1.getValue() - offset2);
+        loop++;
+
+      }
+      System.out.println("Action -> Done");
+
+    } finally {
+      lock.unlock();
+    }
+  }
+
+  private static void right(Robot robot, int timeStep, double worldDegrees) {
+    lock.lock();
+    try {
+
+      worldDegrees = worldDegrees / TURN_FACTOR;
+
+      System.out.println("Action -> Right " + worldDegrees);
+
+      robotStep(robot, timeStep);
+      double offset1 = sensor1.getValue();
+      double offset2 = sensor2.getValue();
+
+      motor1.setPosition(offset1 + worldDegrees);
+      motor2.setPosition(offset2 - worldDegrees);
+      robotStep(robot, timeStep);
+
+      int loop = 0;
+      while ((sensor1.getValue() - offset1 < worldDegrees && sensor2.getValue() - offset2 < worldDegrees)
+          || loop >= ACTION_LOOP_TIMEOUT) {
+
+        robotStep(robot, timeStep);
+        printDistanceTravelled(sensor1.getValue() - offset1);
+        printDistanceTravelled(sensor1.getValue() - offset2);
+        loop++;
+
+      }
+      System.out.println("Action -> Done");
+
+    } finally {
+      lock.unlock();
+    }
+  }
+
+  private static void left(Robot robot, int timeStep, double worldDegrees) {
+    lock.lock();
+    try {
+
+      worldDegrees = worldDegrees / TURN_FACTOR;
+      System.out.println("Action -> Right " + worldDegrees);
+
+      robotStep(robot, timeStep);
+      double offset1 = sensor1.getValue();
+      double offset2 = sensor2.getValue();
+
+      motor1.setPosition(offset1 - worldDegrees);
+      motor2.setPosition(offset2 + worldDegrees);
+      robotStep(robot, timeStep);
+
+      int loop = 0;
+      while ((sensor1.getValue() - offset1 > worldDegrees && sensor2.getValue() - offset2 > worldDegrees)
+          || loop >= ACTION_LOOP_TIMEOUT) {
+        robotStep(robot, timeStep);
+        printDistanceTravelled(sensor1.getValue() - offset1);
+        printDistanceTravelled(sensor1.getValue() - offset2);
+        loop++;
+
+      }
+      System.out.println("Action -> Done");
+
+    } finally {
+      lock.unlock();
+    }
+  }
+
+  private static void back(Robot robot, int timeStep, double worldDistance) {
+    lock.lock();
+    try {
+
+      worldDistance = worldDistance * DRIVE_FACTOR;
+      System.out.println("Action -> Back " + worldDistance);
+
+      robotStep(robot, timeStep);
+      double offset1 = sensor1.getValue();
+      double offset2 = sensor2.getValue();
+
+      motor1.setPosition(offset1 - worldDistance);
+      motor2.setPosition(offset2 - worldDistance);
+      robotStep(robot, timeStep);
+
+      int loop = 0;
+      while ((sensor1.getValue() - offset1 > worldDistance && sensor2.getValue() - offset2 > worldDistance)
+          || loop >= ACTION_LOOP_TIMEOUT) {
+        robotStep(robot, timeStep);
+        printDistanceTravelled(sensor1.getValue() - offset1);
+        printDistanceTravelled(sensor1.getValue() - offset2);
+        loop++;
+
+      }
+      System.out.println("Action -> Done");
+
+    }
+
+    finally {
+      lock.unlock();
+    }
   }
 
   public static void main(String[] args) {
@@ -89,24 +236,8 @@ public class JavaController {
           @Override
           public void handleRequest(HttpServerExchange exchange) throws Exception {
 
-            double worldDistance = getParamAsDouble(exchange, "length") * DRIVE_FACTOR;
-            System.out.println("Action -> Forward " + worldDistance);
-
-            double offset1 = sensor1.getValue();
-            double offset2 = sensor2.getValue();
-
-            motor1.setPosition(offset1 + worldDistance);
-            motor2.setPosition(offset2 + worldDistance);
-
-            int loop = 0;
-            while ((sensor1.getValue() - offset1 < worldDistance && sensor2.getValue() - offset2 < worldDistance)
-                || loop >= ACTION_LOOP_TIMEOUT) {
-
-              printDistanceTravelled(sensor1.getValue() - offset1);
-              printDistanceTravelled(sensor1.getValue() - offset2);
-              loop++;
-            }
-            System.out.println("Action -> Done");
+            double param = getParamAsDouble(exchange, "length");
+            forward(robot, timeStep, param);
             exchange.getResponseSender().send("OK");
 
           }
@@ -114,89 +245,137 @@ public class JavaController {
 
           @Override
           public void handleRequest(HttpServerExchange exchange) throws Exception {
-            double worldDegrees = getParamAsDouble(exchange, "degrees") / TURN_FACTOR;
-            System.out.println("Action -> Right " + worldDegrees);
 
-            double offset1 = sensor1.getValue();
-            double offset2 = sensor2.getValue();
-
-            motor1.setPosition(offset1 + worldDegrees);
-            motor2.setPosition(offset2 - worldDegrees);
-
-            int loop = 0;
-            while ((sensor1.getValue() - offset1 < worldDegrees && sensor2.getValue() - offset2 < worldDegrees)
-                || loop >= ACTION_LOOP_TIMEOUT) {
-              printDistanceTravelled(sensor1.getValue() - offset1);
-              printDistanceTravelled(sensor1.getValue() - offset2);
-              loop++;
-
-            }
-            System.out.println("Action -> Done");
+            double worldDegrees = getParamAsDouble(exchange, "degrees");
+            right(robot, timeStep, worldDegrees);
             exchange.getResponseSender().send("OK");
 
           }
+
         }).add("/left/{degrees}", new HttpHandler() {
 
           @Override
           public void handleRequest(HttpServerExchange exchange) throws Exception {
-            double worldDegrees = getParamAsDouble(exchange, "degrees") / TURN_FACTOR;
-            System.out.println("Action -> Left " + worldDegrees);
 
-            double offset1 = sensor1.getValue();
-            double offset2 = sensor2.getValue();
-
-            motor1.setPosition(offset1 - worldDegrees);
-            motor2.setPosition(offset2 + worldDegrees);
-
-            int loop = 0;
-            while ((sensor1.getValue() - offset1 > worldDegrees && sensor2.getValue() - offset2 > worldDegrees)
-                || loop >= ACTION_LOOP_TIMEOUT) {
-              printDistanceTravelled(sensor1.getValue() - offset1);
-              printDistanceTravelled(sensor1.getValue() - offset2);
-              loop++;
-
-            }
-            System.out.println("Action -> Done");
+            double worldDegrees = getParamAsDouble(exchange, "degrees");
+            left(robot, timeStep, worldDegrees);
             exchange.getResponseSender().send("OK");
 
           }
+
         }).add("/back/{length}", new HttpHandler() {
 
           @Override
           public void handleRequest(HttpServerExchange exchange) throws Exception {
-            double worldDistance = getParamAsDouble(exchange, "length") * DRIVE_FACTOR;
-            System.out.println("Action -> Back " + worldDistance);
 
-            double offset1 = sensor1.getValue();
-            double offset2 = sensor2.getValue();
-
-            motor1.setPosition(offset1 - worldDistance);
-            motor2.setPosition(offset2 - worldDistance);
-
-            int loop = 0;
-            while ((sensor1.getValue() - offset1 > worldDistance && sensor2.getValue() - offset2 > worldDistance)
-                || loop >= ACTION_LOOP_TIMEOUT) {
-              printDistanceTravelled(sensor1.getValue() - offset1);
-              printDistanceTravelled(sensor1.getValue() - offset2);
-              loop++;
-
-            }
-            System.out.println("Action -> Done");
+            double param = getParamAsDouble(exchange, "length");
+            back(robot, timeStep, param);
             exchange.getResponseSender().send("OK");
 
           }
+
         }))
 
         .build();
     server.start();
 
+    // Prepare JSM/AMQP Consumer
+    Context context;
+    MessageConsumer messageConsumer = null;
+    MessageProducer replyProducer = null;
+    Jsonb jsonb = JsonbBuilder.create();
+    Session session = null;
+
+    try {
+      context = new InitialContext();
+      ConnectionFactory factory = (ConnectionFactory) context.lookup("myFactoryLookup");
+      Destination queue = (Destination) context.lookup("myQueueLookup");
+      Connection connection = factory.createConnection("admin", "admin");
+      // connection.setExceptionListener(new MyExceptionListener());
+      connection.start();
+      session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
+      messageConsumer = session.createConsumer(queue);
+      replyProducer = session.createProducer(null);
+
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
+
     // Main loop:
     // - perform simulation steps until Webots is stopping the controller
-    while (robot.step(timeStep) != -1) {
+    while (lockRobotStep(robot, timeStep) != -1) {
+      lockRobotStep(robot, timeStep);
 
+      try {
+
+        TextMessage receivedMessage = (TextMessage) messageConsumer.receive();
+
+        if (receivedMessage == null) {
+          System.out.println("Message not received within timeout");
+        } else {
+          System.out.println(receivedMessage.getText());
+
+          RobotCommand robotCommand = jsonb.fromJson(receivedMessage.getText(), RobotCommand.class);
+
+          System.out.println("Received AMQ Command -> " + robotCommand);
+
+          if (robotCommand.getCommand().equals("forward"))
+            forward(robot, timeStep, Double.valueOf(robotCommand.getParameter()));
+          else if (robotCommand.getCommand().equals("back"))
+            back(robot, timeStep, Double.valueOf(robotCommand.getParameter()));
+          else if (robotCommand.getCommand().equals("left"))
+            back(robot, timeStep, Double.valueOf(robotCommand.getParameter()));
+          else if (robotCommand.getCommand().equals("right"))
+            back(robot, timeStep, Double.valueOf(robotCommand.getParameter()));
+
+          sendReply(replyProducer, jsonb, session, receivedMessage, robotCommand);
+
+        }
+
+      } catch (JMSException e1) {
+        // TODO Auto-generated catch block
+        e1.printStackTrace();
+      }
+
+      try {
+        Thread.sleep(1000);
+      } catch (InterruptedException e) {
+        e.printStackTrace();
+      }
     }
     server.stop();
 
     // Enter here exit cleanup code.
   }
+
+  private static void sendReply(MessageProducer replyProducer, Jsonb jsonb, Session session,
+      TextMessage receivedMessage, RobotCommand robotCommand) throws JMSException {
+    TextMessage response = (TextMessage) session.createTextMessage();
+    RobotCommand responseRobotCommand = new RobotCommand();
+    responseRobotCommand.setCommand("OK");
+    String answer = jsonb.toJson(robotCommand);
+    response.setText(answer);
+    response.setJMSCorrelationID(receivedMessage.getJMSCorrelationID());
+    System.out.println("Replying with AMQ Command -> " + robotCommand);
+    replyProducer.send(receivedMessage.getJMSReplyTo(), response);
+  }
+
+  private static int robotStep(Robot robot, int timeStep) {
+
+    return robot.step(timeStep);
+
+  }
+
+  private static int lockRobotStep(Robot robot, int timeStep) {
+
+    lock.lock();
+    try {
+
+      return robotStep(robot, timeStep);
+
+    } finally {
+      lock.unlock();
+    }
+  }
+
 }

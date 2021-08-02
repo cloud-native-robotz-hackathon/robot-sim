@@ -2,6 +2,7 @@
 *.cache
 scratch_dev
 *.class
+!RobotCommand.class
 .classpath
 *.prefs
 .project
