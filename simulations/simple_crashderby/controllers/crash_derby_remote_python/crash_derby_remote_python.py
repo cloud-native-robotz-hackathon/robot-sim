@@ -6,7 +6,7 @@ from tornado import gen
 from tornado.ioloop import IOLoop
 import tornado.web
 #from controller import Robot, Motor, DistanceSensor
-from controller import Robot, Motor, DistanceSensor
+from controller import Robot, Motor, DistanceSensor, InertialUnit
 
 # create the Robot instance.
 robot = Robot()
@@ -41,6 +41,12 @@ rightSensor.enable(TIME_STEP)
 # get and enable camera device
 camera = robot.getDevice('camera')
 camera.enable(TIME_STEP)
+
+# get and intialize imu 
+iu = robot.getDevice('imu')
+iu.enable(TIME_STEP)
+
+
 # Set to endless rotational motion
 #leftMotor.setPosition(float('+inf'))
 #rightMotor.setPosition(float('+inf'))
@@ -78,7 +84,103 @@ class RightHandler(tornado.web.RequestHandler):
         rightMotor.setPosition(righttargetPos)
         lock.release()
         self.write('OK')
+class RightIuHandler(tornado.web.RequestHandler):
+    def get(self, deg):
+        # Set to endless rotational motion
+        leftMotor.setPosition(float('+inf'))
+        rightMotor.setPosition(float('+inf'))
+        leftMotor.setVelocity(0)
+        rightMotor.setVelocity(0)
+        # convert API requested degree value to radian
+        angle = float(deg) * (3.1415926535 / 180)
+        print("radians requested: " + str(round(angle, 2)))
+        # get roll pitch yaw from IMU
+        rpy = iu.getRollPitchYaw()
+        # webots radians are 0->pi cw and 0->-pi ccw
+        # convert negative (ccw) radians to 0->2pi to make calculation easier
+        if rpy[2] < 0:
+            curyaw = rpy[2] + 2 * math.pi
+        else:
+            curyaw = rpy[2]
+        print("current orientation: " + str(round(curyaw, 2)))
+        targetyaw = curyaw - angle
+        # in case 0/2pi value was passed
+        if targetyaw < 0:
+            targetyaw = targetyaw + 6.28 
+        print("target orientation (" + str(round(curyaw, 2)) + " - " + str(round(angle, 2)) + "): " + str(round(targetyaw, 2)))
+        
+        leftMotor.setVelocity(2)
+        rightMotor.setVelocity(-2)
+        print("starting to turn..........")
+        while not math.isclose(curyaw, targetyaw, abs_tol = 0.02):
+            robot.step(32)
+            rpy = iu.getRollPitchYaw()
+            if rpy[2] < 0:
+                curyaw = rpy[2] + 2 * math.pi
+            else:
+                curyaw = rpy[2]
+            #print("current_loop: " + str(round(curyaw, 2)))
+            
+        leftMotor.setVelocity(0)
+        rightMotor.setVelocity(0)
 
+        rpy = iu.getRollPitchYaw()
+        if rpy[2] < 0:
+            curyaw = rpy[2] + 2 * math.pi
+        else:
+            curyaw = rpy[2]
+        print("final orientation: " + str(round(curyaw, 2)))
+        print("OK")
+        self.write('OK')
+
+class LeftIuHandler(tornado.web.RequestHandler):
+    def get(self, deg):
+        # Set to endless rotational motion
+        leftMotor.setPosition(float('+inf'))
+        rightMotor.setPosition(float('+inf'))
+        leftMotor.setVelocity(0)
+        rightMotor.setVelocity(0)
+        # convert API requested degree value to radian
+        angle = float(deg) * (3.1415926535 / 180)
+        print("radians requested: " + str(round(angle, 2)))
+        # get roll pitch yaw from IMU
+        rpy = iu.getRollPitchYaw()
+        # webots radians are 0->pi cw and 0->-pi ccw
+        # convert negative (ccw) radians to 0->2pi to make calculation easier
+        if rpy[2] < 0:
+            curyaw = rpy[2] + 2 * math.pi
+        else:
+            curyaw = rpy[2]
+        print("current orientation: " + str(round(curyaw, 2)))
+        targetyaw = curyaw + angle
+        # in case 0/2pi value was passed
+        if targetyaw > 2 * math.pi:
+            targetyaw = targetyaw - 6.28 
+        print("target orientation (" + str(round(curyaw, 2)) + " + " + str(round(angle, 2)) + "): " + str(round(targetyaw, 2)))
+        
+        leftMotor.setVelocity(-2)
+        rightMotor.setVelocity(2)
+        print("starting to turn..........")
+        while not math.isclose(curyaw, targetyaw, abs_tol = 0.02):
+            robot.step(32)
+            rpy = iu.getRollPitchYaw()
+            if rpy[2] < 0:
+                curyaw = rpy[2] + 2 * math.pi
+            else:
+                curyaw = rpy[2]
+            #print("current_loop: " + str(round(curyaw, 2)))
+            
+        leftMotor.setVelocity(0)
+        rightMotor.setVelocity(0)
+
+        rpy = iu.getRollPitchYaw()
+        if rpy[2] < 0:
+            curyaw = rpy[2] + 2 * math.pi
+        else:
+            curyaw = rpy[2]
+        print("final orientation: " + str(round(curyaw, 2)))
+        print("OK")
+        self.write('OK')
 class LeftHandler(tornado.web.RequestHandler):
     def get(self, deg):
         lock.acquire()
@@ -128,6 +230,19 @@ class GetImageHandler(tornado.web.RequestHandler):
         image = camera.getImage()
         camera.saveImage(robot_name + ".jpg", 100)
         #self.write(image)
+        
+class GetIuHandler(tornado.web.RequestHandler):
+    def get(self):
+        rpy = iu.getRollPitchYaw()
+        if rpy[2] < 0:
+            curyaw = rpy[2] + 2 * math.pi
+        else:
+            curyaw = rpy[2]
+        #print("roll: " + str(round(curyaw, 2)))
+        #print("pitch: " + str(round(curyaw, 2)))
+        print("yaw raw: " + str(round(rpy[2], 2)))
+        print("yaw: " + str(round(curyaw, 2)))
+        #self.write(image)
 
 class Application(tornado.web.Application):
     def __init__(self):
@@ -135,9 +250,12 @@ class Application(tornado.web.Application):
             (r"/?", MainHandler),
             (r"/stop/?", StopHandler),
             (r"/left/(\w+)", LeftHandler),
+            (r"/leftiu/(\w+)", LeftIuHandler),
             (r"/right/(\w+)", RightHandler),
+            (r"/rightiu/(\w+)", RightIuHandler),
             (r"/forward/(\w+)", ForwardHandler),
             (r"/image/?", GetImageHandler),
+            (r"/iu/?", GetIuHandler),
             (r"/distance/?", DistanceHandler)
         ]
         tornado.web.Application.__init__(self, handlers)
