@@ -99,7 +99,7 @@ public class JavaController {
 
         robotStep(robot, timeStep);
         printDistanceTravelled(sensor1.getValue() - offset1);
-        printDistanceTravelled(sensor1.getValue() - offset2);
+        printDistanceTravelled(sensor2.getValue() - offset2);
         loop++;
 
       }
@@ -121,19 +121,27 @@ public class JavaController {
       robotStep(robot, timeStep);
       double offset1 = sensor1.getValue();
       double offset2 = sensor2.getValue();
+       System.out.println(offset1);
+        System.out.println(offset2);
+      
 
       motor1.setPosition(offset1 + worldDegrees);
       motor2.setPosition(offset2 - worldDegrees);
       robotStep(robot, timeStep);
 
       int loop = 0;
+      
+      System.out.println(sensor1.getValue() - offset1);
+        System.out.println(sensor2.getValue() - offset2);
+      
       while ((sensor1.getValue() - offset1 < worldDegrees && sensor2.getValue() - offset2 < worldDegrees)
           || loop >= ACTION_LOOP_TIMEOUT) {
 
         robotStep(robot, timeStep);
         printDistanceTravelled(sensor1.getValue() - offset1);
-        printDistanceTravelled(sensor1.getValue() - offset2);
+        printDistanceTravelled(sensor2.getValue() - offset2);
         loop++;
+        System.out.println(loop);
 
       }
       System.out.println("Action -> Done");
@@ -148,7 +156,7 @@ public class JavaController {
     try {
 
       worldDegrees = worldDegrees / TURN_FACTOR;
-      System.out.println("Action -> Right " + worldDegrees);
+      System.out.println("Action -> Left " + worldDegrees);
 
       robotStep(robot, timeStep);
       double offset1 = sensor1.getValue();
@@ -163,7 +171,7 @@ public class JavaController {
           || loop >= ACTION_LOOP_TIMEOUT) {
         robotStep(robot, timeStep);
         printDistanceTravelled(sensor1.getValue() - offset1);
-        printDistanceTravelled(sensor1.getValue() - offset2);
+        printDistanceTravelled(sensor2.getValue() - offset2);
         loop++;
 
       }
@@ -194,7 +202,7 @@ public class JavaController {
           || loop >= ACTION_LOOP_TIMEOUT) {
         robotStep(robot, timeStep);
         printDistanceTravelled(sensor1.getValue() - offset1);
-        printDistanceTravelled(sensor1.getValue() - offset2);
+        printDistanceTravelled(sensor2.getValue() - offset2);
         loop++;
 
       }
@@ -324,9 +332,9 @@ public class JavaController {
           else if (robotCommand.getCommand().equals("back"))
             back(robot, timeStep, Double.valueOf(robotCommand.getParameter()));
           else if (robotCommand.getCommand().equals("left"))
-            back(robot, timeStep, Double.valueOf(robotCommand.getParameter()));
+            left(robot, timeStep, Double.valueOf(robotCommand.getParameter()));
           else if (robotCommand.getCommand().equals("right"))
-            back(robot, timeStep, Double.valueOf(robotCommand.getParameter()));
+            right(robot, timeStep, Double.valueOf(robotCommand.getParameter()));
 
           sendReply(replyProducer, jsonb, session, receivedMessage, robotCommand);
 
@@ -350,7 +358,7 @@ public class JavaController {
 
   private static void sendReply(MessageProducer replyProducer, Jsonb jsonb, Session session,
       TextMessage receivedMessage, RobotCommand robotCommand) throws JMSException {
-    TextMessage response = (TextMessage) session.createTextMessage();
+    TextMessage response = session.createTextMessage();
     RobotCommand responseRobotCommand = new RobotCommand();
     responseRobotCommand.setCommand("OK");
     String answer = jsonb.toJson(robotCommand);
