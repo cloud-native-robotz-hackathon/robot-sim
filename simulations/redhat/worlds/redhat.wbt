@@ -1,5 +1,6 @@
 #VRML_SIM R2021a utf8
 WorldInfo {
+  basicTimeStep 16
   coordinateSystem "NUE"
   contactProperties [
     ContactProperties {
@@ -10,8 +11,8 @@ WorldInfo {
   ]
 }
 Viewpoint {
-  orientation -0.9994807327369166 0.03063269583374419 0.009995140500940013 0.6311027282011187
-  position 0.05672135506400944 1.934514705379979 2.4971701758517804
+  orientation -1 -6.342914003581006e-14 -6.137750574662657e-15 0.31079632679498204
+  position 0.027238896452729033 0.918917370701638 1.5986383276837015
 }
 Background {
   skyColor [
@@ -58,12 +59,15 @@ RectangleArena {
   }
 }
 DEF ADEPT Robot {
+  translation -8.64401705227979e-07 -0.01019614862572811 0.0001623801301130906
+  rotation -0.01703718926952442 -0.6143730362872176 -0.7888317352040418 -4.775574754385268e-06
   children [
     InertialUnit {
       name "imu"
     }
     Camera {
-      translation 0 0 0.21
+      translation 0 0.200027 -0.17
+      rotation -0.0005254768197797978 0.010696096331612412 0.9999426570545816 0.000792689
     }
     Group {
     }
@@ -129,6 +133,7 @@ DEF ADEPT Robot {
     }
     HingeJoint {
       jointParameters HingeJointParameters {
+        position 7.251635600285633e-10
         axis -1 0 0
         anchor 0 0.0825 0
       }
@@ -141,8 +146,8 @@ DEF ADEPT Robot {
         }
       ]
       endPoint Solid {
-        translation -0.1603 0.0825 0
-        rotation 1 0 0 5.2408332
+        translation -0.16029999999999994 0.0825 0
+        rotation 1 0 0 5.240833199274834
         children [
           DEF WHEEL Transform {
             rotation 0 0 1 1.57
@@ -163,10 +168,13 @@ DEF ADEPT Robot {
         ]
         name "left wheel"
         boundingObject USE WHEEL
+        physics Physics {
+        }
       }
     }
     HingeJoint {
       jointParameters HingeJointParameters {
+        position -3.5593142100111084e-10
         axis -1 0 0
         anchor 0 0.0825 0
       }
@@ -179,13 +187,15 @@ DEF ADEPT Robot {
         }
       ]
       endPoint Solid {
-        translation 0.1603 0.0825 0
-        rotation 0.9999999999999999 0 0 0.9226862300000003
+        translation 0.16029999999999994 0.0825 0
+        rotation 1 0 0 0.9226862310677937
         children [
           USE WHEEL
         ]
         name "right wheel"
         boundingObject USE WHEEL
+        physics Physics {
+        }
       }
     }
     Shape {
@@ -360,8 +370,12 @@ DEF ADEPT Robot {
       }
     ]
   }
-  controller "crash_derby_remote_python"
+  physics Physics {
+    mass 0.1
+  }
+  controller "JavaController"
   customData "3002"
+  synchronization FALSE
 }
 DEF WALL Transform {
   translation 2 0.25 -2

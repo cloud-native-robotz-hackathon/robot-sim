@@ -23,6 +23,7 @@ import javax.naming.InitialContext;
 import com.cyberbotics.webots.controller.Motor;
 import com.cyberbotics.webots.controller.PositionSensor;
 import com.cyberbotics.webots.controller.Robot;
+import com.cyberbotics.webots.controller.Camera;
 
 import io.undertow.Handlers;
 import io.undertow.Undertow;
@@ -45,6 +46,7 @@ public class JavaController {
   static Motor motor2;
   static PositionSensor sensor1;
   static PositionSensor sensor2;
+  static Camera camera;
   static double wheelCircum;
   static double encoderUnit;
   static double distance = 0.0;
@@ -225,6 +227,9 @@ public class JavaController {
     sensor1.enable(timeStep);
     sensor2 = motor2.getPositionSensor();
     sensor2.enable(timeStep);
+    
+    camera = robot.getCamera("camera");
+    camera.enable(timeStep);
 
     int port = Integer.valueOf(robot.getCustomData());
 
