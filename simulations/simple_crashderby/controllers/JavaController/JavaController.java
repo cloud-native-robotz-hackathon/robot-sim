@@ -23,6 +23,7 @@ import javax.naming.InitialContext;
 import com.cyberbotics.webots.controller.Motor;
 import com.cyberbotics.webots.controller.PositionSensor;
 import com.cyberbotics.webots.controller.Robot;
+import com.cyberbotics.webots.controller.Camera;
 
 import io.undertow.Handlers;
 import io.undertow.Undertow;
@@ -39,7 +40,7 @@ public class JavaController {
   private static final double WHEEL_DIAMETER = 4.1;
   private static final double DEFAULT_SPEED = 6.28;
   private static final double DRIVE_FACTOR = 12.2; // positions to meters
-  private static final double TURN_FACTOR = 30; // position to degrees
+  private static final double TURN_FACTOR = 35.1; // position to degrees
 
   static Motor motor1;
   static Motor motor2;
@@ -48,6 +49,7 @@ public class JavaController {
   static double wheelCircum;
   static double encoderUnit;
   static double distance = 0.0;
+  static Camera camera;
 
   static ReentrantLock lock = new ReentrantLock();
 
@@ -92,14 +94,16 @@ public class JavaController {
       motor1.setPosition(offset1 + worldDistance);
       motor2.setPosition(offset2 + worldDistance);
       robotStep(robot, timeStep);
+      camera = robot.getCamera("camera");
+      camera.enable(timeStep);
 
       int loop = 0;
       while ((sensor1.getValue() - offset1 < worldDistance && sensor2.getValue() - offset2 < worldDistance)
           || loop >= ACTION_LOOP_TIMEOUT) {
 
         robotStep(robot, timeStep);
-        printDistanceTravelled(sensor1.getValue() - offset1);
-        printDistanceTravelled(sensor1.getValue() - offset2);
+        //printDistanceTravelled(sensor1.getValue() - offset1);
+        //printDistanceTravelled(sensor1.getValue() - offset2);
         loop++;
 
       }
@@ -131,8 +135,8 @@ public class JavaController {
           || loop >= ACTION_LOOP_TIMEOUT) {
 
         robotStep(robot, timeStep);
-        printDistanceTravelled(sensor1.getValue() - offset1);
-        printDistanceTravelled(sensor1.getValue() - offset2);
+        //printDistanceTravelled(sensor1.getValue() - offset1);
+        //printDistanceTravelled(sensor1.getValue() - offset2);
         loop++;
 
       }
@@ -324,9 +328,9 @@ public class JavaController {
           else if (robotCommand.getCommand().equals("back"))
             back(robot, timeStep, Double.valueOf(robotCommand.getParameter()));
           else if (robotCommand.getCommand().equals("left"))
-            back(robot, timeStep, Double.valueOf(robotCommand.getParameter()));
+            left(robot, timeStep, Double.valueOf(robotCommand.getParameter()));
           else if (robotCommand.getCommand().equals("right"))
-            back(robot, timeStep, Double.valueOf(robotCommand.getParameter()));
+            right(robot, timeStep, Double.valueOf(robotCommand.getParameter()));
 
           sendReply(replyProducer, jsonb, session, receivedMessage, robotCommand);
 
