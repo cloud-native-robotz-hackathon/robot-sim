@@ -1269,7 +1269,7 @@ DEF PIONEER3DX Robot {
     Group {
     }
   ]
-  name "robot1"
+  name "terminator"
   model "Adept Pioneer 3-DX"
   boundingObject Group {
     children [
@@ -1382,10 +1382,10 @@ DEF PIONEER3DX Robot {
       0 0.06 0.06
     ]
   }
-  controller "crash_derby_remote_python"
+  controller "JavaController"
   customData "3002"
+  synchronization FALSE
 }
-
 DEF WALL Transform {
   translation 2 0.25 -2
   children [

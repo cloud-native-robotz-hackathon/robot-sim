@@ -50,6 +50,7 @@ public class JavaController {
   static double encoderUnit;
   static double distance = 0.0;
   static Camera camera;
+  static String robotName;
 
   static ReentrantLock lock = new ReentrantLock();
 
@@ -102,8 +103,8 @@ public class JavaController {
           || loop >= ACTION_LOOP_TIMEOUT) {
 
         robotStep(robot, timeStep);
-        //printDistanceTravelled(sensor1.getValue() - offset1);
-        //printDistanceTravelled(sensor1.getValue() - offset2);
+        // printDistanceTravelled(sensor1.getValue() - offset1);
+        // printDistanceTravelled(sensor1.getValue() - offset2);
         loop++;
 
       }
@@ -135,8 +136,8 @@ public class JavaController {
           || loop >= ACTION_LOOP_TIMEOUT) {
 
         robotStep(robot, timeStep);
-        //printDistanceTravelled(sensor1.getValue() - offset1);
-        //printDistanceTravelled(sensor1.getValue() - offset2);
+        // printDistanceTravelled(sensor1.getValue() - offset1);
+        // printDistanceTravelled(sensor1.getValue() - offset2);
         loop++;
 
       }
@@ -166,8 +167,8 @@ public class JavaController {
       while ((sensor1.getValue() - offset1 > worldDegrees && sensor2.getValue() - offset2 > worldDegrees)
           || loop >= ACTION_LOOP_TIMEOUT) {
         robotStep(robot, timeStep);
-        printDistanceTravelled(sensor1.getValue() - offset1);
-        printDistanceTravelled(sensor1.getValue() - offset2);
+        // printDistanceTravelled(sensor1.getValue() - offset1);
+        // printDistanceTravelled(sensor1.getValue() - offset2);
         loop++;
 
       }
@@ -197,8 +198,8 @@ public class JavaController {
       while ((sensor1.getValue() - offset1 > worldDistance && sensor2.getValue() - offset2 > worldDistance)
           || loop >= ACTION_LOOP_TIMEOUT) {
         robotStep(robot, timeStep);
-        printDistanceTravelled(sensor1.getValue() - offset1);
-        printDistanceTravelled(sensor1.getValue() - offset2);
+        // printDistanceTravelled(sensor1.getValue() - offset1);
+        // printDistanceTravelled(sensor1.getValue() - offset2);
         loop++;
 
       }
@@ -231,8 +232,11 @@ public class JavaController {
     sensor2.enable(timeStep);
 
     int port = Integer.valueOf(robot.getCustomData());
+    robotName = robot.getName();
 
-    System.out.println("Server -> starting on port " + port);
+    System.out.println("initializing robot -> " + robotName);
+
+    System.out.println("REST Server starting on port -> " + port);
 
     Undertow server = Undertow.builder().addHttpListener(port, "localhost")
         .setHandler(Handlers.pathTemplate().add("/forward/{length}", new HttpHandler() {
@@ -284,26 +288,36 @@ public class JavaController {
     server.start();
 
     // Prepare JSM/AMQP Consumer
+
     Context context;
     MessageConsumer messageConsumer = null;
     MessageProducer replyProducer = null;
     Jsonb jsonb = JsonbBuilder.create();
     Session session = null;
 
+    boolean amqConnectionEstablished = false;
+
     try {
+      System.out.println("Attempting to connect to AMQ Broker");
       context = new InitialContext();
-      ConnectionFactory factory = (ConnectionFactory) context.lookup("myFactoryLookup");
-      Destination queue = (Destination) context.lookup("myQueueLookup");
+      ConnectionFactory factory = (ConnectionFactory) context.lookup(robotName+"FactoryLookup");
+      Destination queue = (Destination) context.lookup(robotName+"QueueLookup");
       Connection connection = factory.createConnection("admin", "admin");
       // connection.setExceptionListener(new MyExceptionListener());
       connection.start();
       session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
       messageConsumer = session.createConsumer(queue);
       replyProducer = session.createProducer(null);
+      amqConnectionEstablished = true;
 
     } catch (Exception e) {
+
+      System.err.println("Could not connect to AMQ Broker. Check your jndi.properties");
       e.printStackTrace();
     }
+
+    if (amqConnectionEstablished)
+      System.out.println("AMQ Connected successfully");
 
     // Main loop:
     // - perform simulation steps until Webots is stopping the controller
@@ -312,7 +326,10 @@ public class JavaController {
 
       try {
 
-        TextMessage receivedMessage = (TextMessage) messageConsumer.receive();
+        if (amqConnectionEstablished) {
+        }
+
+        TextMessage receivedMessage = (TextMessage) messageConsumer.receive(1000L);
 
         if (receivedMessage == null) {
           System.out.println("Message not received within timeout");
@@ -332,35 +349,40 @@ public class JavaController {
           else if (robotCommand.getCommand().equals("right"))
             right(robot, timeStep, Double.valueOf(robotCommand.getParameter()));
 
-          sendReply(replyProducer, jsonb, session, receivedMessage, robotCommand);
+          if (receivedMessage.getJMSReplyTo() != null)
+            sendReply(replyProducer, jsonb, session, receivedMessage, robotCommand);
 
         }
 
       } catch (JMSException e1) {
-        // TODO Auto-generated catch block
+        System.err.println("Error proccessing AMQ Message");
         e1.printStackTrace();
       }
 
-      try {
-        Thread.sleep(1000);
-      } catch (InterruptedException e) {
-        e.printStackTrace();
-      }
-    }
-    server.stop();
+    
 
-    // Enter here exit cleanup code.
+    try {
+      Thread.sleep(1000);
+    } catch (InterruptedException e) {
+      e.printStackTrace();
+    }
+  }
+  
+  server.stop();
+
+
+  // Enter here exit cleanup code.
   }
 
   private static void sendReply(MessageProducer replyProducer, Jsonb jsonb, Session session,
-      TextMessage receivedMessage, RobotCommand robotCommand) throws JMSException {
-    TextMessage response = (TextMessage) session.createTextMessage();
+    TextMessage receivedMessage, RobotCommand robotCommand) throws JMSException {
+    TextMessage response = session.createTextMessage();
     RobotCommand responseRobotCommand = new RobotCommand();
     responseRobotCommand.setCommand("OK");
-    String answer = jsonb.toJson(robotCommand);
+    String answer = jsonb.toJson(responseRobotCommand);
     response.setText(answer);
     response.setJMSCorrelationID(receivedMessage.getJMSCorrelationID());
-    System.out.println("Replying with AMQ Command -> " + robotCommand);
+    System.out.println("Replying with AMQ Command -> " + responseRobotCommand);
     replyProducer.send(receivedMessage.getJMSReplyTo(), response);
   }
 
