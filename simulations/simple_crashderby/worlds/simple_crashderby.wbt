@@ -10,8 +10,8 @@ WorldInfo {
   ]
 }
 Viewpoint {
-  orientation 0.27322089909932484 0.956292292783822 0.10418920797096744 5.524300976095776
-  position -0.07965042719836246 0.7525241720572612 1.8900263104730948
+  orientation 0.4451533603701531 0.8855960162333463 0.13250728954584862 5.634672252331342
+  position 1.0397002550458392 0.7297686375591558 1.5143527481313241
 }
 Background {
   skyColor [
@@ -60,6 +60,36 @@ RectangleArena {
 DEF PIONEER3DX Robot {
   translation 1.9253433644845324 0.09494888582377042 0.035248249215313304
   children [
+    LED {
+      translation 0 0.14 0.16
+      children [
+        Group {
+          children [
+            PointLight {
+              attenuation 0 0 10
+              color 0 0 0
+              intensity 0.1
+              location 0 0.3 0
+              on FALSE
+              radius 1
+            }
+            Shape {
+              appearance PBRAppearance {
+                baseColor 0.552941 0.552941 0.552941
+                roughness 1
+                metalness 0
+              }
+              geometry Sphere {
+                radius 0.02
+              }
+            }
+          ]
+        }
+      ]
+      color [
+        0.333333 0.666667 0
+      ]
+    }
     InertialUnit {
       name "imu"
     }

@@ -7,6 +7,7 @@ from tornado.ioloop import IOLoop
 import tornado.web
 #from controller import Robot, Motor, DistanceSensor
 from controller import Robot, Motor, DistanceSensor, InertialUnit
+from controller import LED
 
 # create the Robot instance.
 robot = Robot()
@@ -46,6 +47,8 @@ camera.enable(TIME_STEP)
 iu = robot.getDevice('imu')
 iu.enable(TIME_STEP)
 
+# get and intialize LED 
+led = robot.getDevice('led')
 
 # Set to endless rotational motion
 #leftMotor.setPosition(float('+inf'))
@@ -244,6 +247,18 @@ class GetIuHandler(tornado.web.RequestHandler):
         print("yaw: " + str(round(curyaw, 2)))
         #self.write(image)
 
+class LedHandler(tornado.web.RequestHandler):
+    def get(self, state):
+        if state == "on":
+            led.set(1)
+            self.write("LED on")
+        elif state == "off":
+            led.set(0)
+            self.write("LED off")    
+        else:
+            self.write("on or off")
+        
+
 class Application(tornado.web.Application):
     def __init__(self):
         handlers = [
@@ -256,7 +271,8 @@ class Application(tornado.web.Application):
             (r"/forward/(\w+)", ForwardHandler),
             (r"/image/?", GetImageHandler),
             (r"/iu/?", GetIuHandler),
-            (r"/distance/?", DistanceHandler)
+            (r"/distance/?", DistanceHandler),
+            (r"/led/(\w+)", LedHandler)
         ]
         tornado.web.Application.__init__(self, handlers)
 
