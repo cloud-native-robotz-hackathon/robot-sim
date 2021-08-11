@@ -24,6 +24,8 @@ import com.cyberbotics.webots.controller.Motor;
 import com.cyberbotics.webots.controller.PositionSensor;
 import com.cyberbotics.webots.controller.Robot;
 import com.cyberbotics.webots.controller.Camera;
+import com.cyberbotics.webots.controller.Device;
+import com.cyberbotics.webots.controller.LED;
 
 import io.undertow.Handlers;
 import io.undertow.Undertow;
@@ -50,6 +52,7 @@ public class JavaController {
   static double encoderUnit;
   static double distance = 0.0;
   static Camera camera;
+  static LED led;
   static String robotName;
 
   static ReentrantLock lock = new ReentrantLock();
@@ -95,8 +98,7 @@ public class JavaController {
       motor1.setPosition(offset1 + worldDistance);
       motor2.setPosition(offset2 + worldDistance);
       robotStep(robot, timeStep);
-      camera = robot.getCamera("camera");
-      camera.enable(timeStep);
+
 
       int loop = 0;
       while ((sensor1.getValue() - offset1 < worldDistance && sensor2.getValue() - offset2 < worldDistance)
@@ -234,6 +236,13 @@ public class JavaController {
     int port = Integer.valueOf(robot.getCustomData());
     robotName = robot.getName();
 
+    
+    camera = robot.getCamera("camera");
+    camera.enable(timeStep);
+    
+    led = robot.getLED("led");
+
+
     System.out.println("initializing robot -> " + robotName);
 
     System.out.println("REST Server starting on port -> " + port);
@@ -314,11 +323,15 @@ public class JavaController {
 
       System.err.println("Could not connect to AMQ Broker. Check your jndi.properties");
       e.printStackTrace();
+      led.set(0);
     }
 
     if (amqConnectionEstablished)
+    {
       System.out.println("AMQ Connected successfully");
-
+      System.out.println(led);
+      led.set(1);
+    }  
     // Main loop:
     // - perform simulation steps until Webots is stopping the controller
     while (lockRobotStep(robot, timeStep) != -1) {
