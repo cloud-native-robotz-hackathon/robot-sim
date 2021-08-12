@@ -9,4 +9,3 @@ scratch_dev
 .project
 settings.json
 *.bak
-jndi.properties.custom
