@@ -1,0 +1,190 @@
+#VRML_SIM R2021b utf8
+WorldInfo {
+  coordinateSystem "NUE"
+  contactProperties [
+    ContactProperties {
+      coulombFriction [
+        3
+      ]
+    }
+  ]
+}
+Viewpoint {
+  orientation 0.4451533603701531 0.8855960162333463 0.13250728954584862 5.634672252331342
+  position 1.0397002550458392 0.7297686375591558 1.5143527481313241
+}
+Background {
+  skyColor [
+    1 1 1
+  ]
+}
+DirectionalLight {
+  ambientIntensity 1
+  direction 0.1 -0.5 0.3
+}
+RectangleArena {
+  name "arena"
+  floorSize 10 10
+  floorTileSize 2 2
+  floorAppearance PBRAppearance {
+    baseColorMap ImageTexture {
+      url [
+        "textures/parquetry/chequered_parquetry_black_white_shadowman2.jpg"
+      ]
+    }
+    roughness 1
+    roughnessMap ImageTexture {
+      url [
+        "textures/parquetry/chequered_parquetry_roughness.jpg"
+      ]
+    }
+    metalness 0
+    normalMap ImageTexture {
+      url [
+        "textures/parquetry/chequered_parquetry_normal.jpg"
+      ]
+    }
+    occlusionMap ImageTexture {
+      url [
+        "textures/parquetry/chequered_parquetry_occlusion.jpg"
+      ]
+    }
+  }
+  wallHeight 0.3
+  wallAppearance PBRAppearance {
+    baseColor 0.666667 0 0
+    roughness 1
+    metalness 0
+  }
+}
+DEF WALL Transform {
+  translation 2 0.25 -2
+  children [
+    DEF WALL Solid {
+      children [
+        DEF WALL Shape {
+          appearance PBRAppearance {
+            baseColor 0.666667 0 0
+            roughness 1
+            metalness 0
+          }
+          geometry Box {
+            size 2 0.5 0.1
+          }
+        }
+      ]
+      boundingObject USE WALL
+    }
+  ]
+}
+DEF WALL Transform {
+  translation -2 0.25 -2
+  children [
+    DEF WALL Solid {
+      children [
+        DEF WALL Shape {
+          appearance PBRAppearance {
+            baseColor 0.666667 0 0
+            roughness 1
+            metalness 0
+          }
+          geometry Box {
+            size 2 0.5 0.1
+          }
+        }
+      ]
+      name "solid(2)"
+      boundingObject USE WALL
+    }
+  ]
+}
+DEF WALL Transform {
+  translation 2 0.25 2
+  children [
+    DEF WALL Solid {
+      children [
+        DEF WALL Shape {
+          appearance PBRAppearance {
+            baseColor 0.666667 0 0
+            roughness 1
+            metalness 0
+          }
+          geometry Box {
+            size 2 0.5 0.1
+          }
+        }
+      ]
+      name "solid(1)"
+      boundingObject USE WALL
+    }
+  ]
+}
+DEF WALL Transform {
+  translation 2 0.25 2
+  rotation 0 1 0 1.5707996938995747
+  children [
+    DEF WALL Solid {
+      translation 1.98423 -1.41732e-05 -5.02212
+      rotation 0 0 1 4.692820414042842e-06
+      children [
+        DEF WALL Shape {
+          appearance PBRAppearance {
+            baseColor 0.666667 0 0
+            roughness 1
+            metalness 0
+          }
+          geometry Box {
+            size 2 0.5 0.1
+          }
+        }
+      ]
+      name "solid(4)"
+      boundingObject USE WALL
+    }
+  ]
+}
+DEF WALL Transform {
+  translation 2 0.25 2
+  rotation 0 1 0 1.5708003061004252
+  children [
+    DEF WALL Solid {
+      translation 1.98592 -1.95695e-05 1.04846
+      rotation 0 0 1 4.692820414042842e-06
+      children [
+        DEF WALL Shape {
+          appearance PBRAppearance {
+            baseColor 0.666667 0 0
+            roughness 1
+            metalness 0
+          }
+          geometry Box {
+            size 2 0.5 0.1
+          }
+        }
+      ]
+      name "solid(5)"
+      boundingObject USE WALL
+    }
+  ]
+}
+DEF WALL Transform {
+  translation -2 0.25 2
+  children [
+    DEF WALL Solid {
+      children [
+        DEF WALL Shape {
+          appearance PBRAppearance {
+            baseColor 0.666667 0 0
+            roughness 1
+            metalness 0
+          }
+          geometry Box {
+            size 2 0.5 0.1
+          }
+        }
+      ]
+      name "solid(3)"
+      boundingObject USE WALL
+    }
+  ]
+}
