@@ -10,8 +10,8 @@ WorldInfo {
   ]
 }
 Viewpoint {
-  orientation 0.4451533603701531 0.8855960162333463 0.13250728954584862 5.634672252331342
-  position 1.0397002550458392 0.7297686375591558 1.5143527481313241
+  orientation 0.9993697549070707 -0.03406188966624848 -0.0099940306856478 5.712048259794592
+  position 0.37522410791027183 7.133295715684455 12.359515030429296
 }
 Background {
   skyColor [
@@ -187,4 +187,27 @@ DEF WALL Transform {
       boundingObject USE WALL
     }
   ]
+}
+robot_sim {
+  position 4.24 0.0949489 0
+  rotation 0 1 0 1.5707996938995747
+  name "terminator"
+  customdata "3001"
+}
+robot_sim {
+  position -3.96 0.0949489 0
+  rotation 0 1 0 -1.57
+  name "marvin"
+  customdata "3002"
+}
+robot_sim {
+  position 0 0.0949489 4.03
+  name "r3d2"
+  customdata "3003"
+}
+robot_sim {
+  position 0 0.0949489 -4.01
+  rotation 0 1 0 3.14159
+  name "willy"
+  customdata "3004"
 }
