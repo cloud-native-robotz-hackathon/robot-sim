@@ -23,6 +23,10 @@ import javax.naming.InitialContext;
 import com.cyberbotics.webots.controller.Motor;
 import com.cyberbotics.webots.controller.PositionSensor;
 import com.cyberbotics.webots.controller.Robot;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.cyberbotics.webots.controller.Camera;
 import com.cyberbotics.webots.controller.Device;
 import com.cyberbotics.webots.controller.LED;
@@ -53,9 +57,11 @@ public class JavaController {
   static double distance = 0.0;
   static Camera camera;
   static LED led;
-  static String robotName;
+  static String robotName = "not defined";
 
   static ReentrantLock lock = new ReentrantLock();
+
+  static Logger log = LoggerFactory.getLogger(JavaController.class);
 
   // This is the main function of your controller.
   // It creates an instance of your Robot instance and
@@ -74,14 +80,9 @@ public class JavaController {
   }
 
   private static void printDistanceTravelled(double distance) {
-    System.out.println("Current distance1 travelled -> " + String.valueOf(distance));
+    log.debug("{} - Current distance1 travelled -> {}", robotName, String.valueOf(distance));
 
-  }
-
-  private static void setMotorPositionWithOffset(Motor motor1, Motor motor2) {
-    System.out.println("Current distance1 travelled -> " + String.valueOf(distance));
-
-  }
+  }  
 
   private static void forward(Robot robot, int timeStep, double worldDistance) {
     lock.lock();
@@ -89,7 +90,7 @@ public class JavaController {
 
       worldDistance = worldDistance * DRIVE_FACTOR;
 
-      System.out.println("Action -> Forward " + worldDistance);
+      log.info("Action -> Forward " + worldDistance);
 
       robotStep(robot, timeStep);
 
@@ -105,12 +106,12 @@ public class JavaController {
           || loop >= ACTION_LOOP_TIMEOUT) {
 
         robotStep(robot, timeStep);
-        // printDistanceTravelled(sensor1.getValue() - offset1);
-        // printDistanceTravelled(sensor1.getValue() - offset2);
+        printDistanceTravelled(sensor1.getValue() - offset1);
+        printDistanceTravelled(sensor1.getValue() - offset2);
         loop++;
 
       }
-      System.out.println("Action -> Done");
+      log.info("{} - Action -> Done", robotName);
 
     } finally {
       lock.unlock();
@@ -123,7 +124,7 @@ public class JavaController {
 
       worldDegrees = worldDegrees / TURN_FACTOR;
 
-      System.out.println("Action -> Right " + worldDegrees);
+      log.info("{} - Action -> Right {}", robotName, worldDegrees);
 
       robotStep(robot, timeStep);
       double offset1 = sensor1.getValue();
@@ -138,12 +139,12 @@ public class JavaController {
           || loop >= ACTION_LOOP_TIMEOUT) {
 
         robotStep(robot, timeStep);
-        // printDistanceTravelled(sensor1.getValue() - offset1);
-        // printDistanceTravelled(sensor1.getValue() - offset2);
+        printDistanceTravelled(sensor1.getValue() - offset1);
+        printDistanceTravelled(sensor1.getValue() - offset2);
         loop++;
 
       }
-      System.out.println("Action -> Done");
+      log.info("{} - Action -> Done", robotName);
 
     } finally {
       lock.unlock();
@@ -155,7 +156,7 @@ public class JavaController {
     try {
 
       worldDegrees = worldDegrees / TURN_FACTOR;
-      System.out.println("Action -> Right " + worldDegrees);
+      log.info("{} - Action -> Right ", robotName, worldDegrees);
 
       robotStep(robot, timeStep);
       double offset1 = sensor1.getValue();
@@ -169,12 +170,12 @@ public class JavaController {
       while ((sensor1.getValue() - offset1 > worldDegrees && sensor2.getValue() - offset2 > worldDegrees)
           || loop >= ACTION_LOOP_TIMEOUT) {
         robotStep(robot, timeStep);
-        // printDistanceTravelled(sensor1.getValue() - offset1);
-        // printDistanceTravelled(sensor1.getValue() - offset2);
+        printDistanceTravelled(sensor1.getValue() - offset1);
+        printDistanceTravelled(sensor1.getValue() - offset2);
         loop++;
 
       }
-      System.out.println("Action -> Done");
+      log.info("{} - Action -> Done", robotName);
 
     } finally {
       lock.unlock();
@@ -186,7 +187,7 @@ public class JavaController {
     try {
 
       worldDistance = worldDistance * DRIVE_FACTOR;
-      System.out.println("Action -> Back " + worldDistance);
+      log.info("{} Action -> Back {}", robotName, worldDistance);
 
       robotStep(robot, timeStep);
       double offset1 = sensor1.getValue();
@@ -200,12 +201,12 @@ public class JavaController {
       while ((sensor1.getValue() - offset1 > worldDistance && sensor2.getValue() - offset2 > worldDistance)
           || loop >= ACTION_LOOP_TIMEOUT) {
         robotStep(robot, timeStep);
-        // printDistanceTravelled(sensor1.getValue() - offset1);
-        // printDistanceTravelled(sensor1.getValue() - offset2);
+        printDistanceTravelled(sensor1.getValue() - offset1);
+        printDistanceTravelled(sensor1.getValue() - offset2);
         loop++;
 
       }
-      System.out.println("Action -> Done");
+      log.info("{} Action -> Done", robotName);
 
     }
 
@@ -243,9 +244,9 @@ public class JavaController {
     led = robot.getLED("led");
 
 
-    System.out.println("initializing robot -> " + robotName);
+    log.info("{} - Initializing robot", robotName);
 
-    System.out.println("REST Server starting on port -> " + port);
+    log.info("{} - REST Server starting on port -> {}",robotName, port);
 
     Undertow server = Undertow.builder().addHttpListener(port, "localhost")
         .setHandler(Handlers.pathTemplate().add("/forward/{length}", new HttpHandler() {
@@ -307,7 +308,7 @@ public class JavaController {
     boolean amqConnectionEstablished = false;
 
     try {
-      System.out.println("Attempting to connect to AMQ Broker");
+      log.info("{} - Attempting to connect to AMQ Broker", robotName);
       context = new InitialContext();
       ConnectionFactory factory = (ConnectionFactory) context.lookup(robotName+"FactoryLookup");
       Destination queue = (Destination) context.lookup(robotName+"QueueLookup");
@@ -321,15 +322,14 @@ public class JavaController {
 
     } catch (Exception e) {
 
-      System.err.println("Could not connect to AMQ Broker. Check your jndi.properties");
+      log.error("{} - Could not connect to AMQ Broker. Check your jndi.properties.",robotName,e);
       e.printStackTrace();
       led.set(0);
     }
 
     if (amqConnectionEstablished)
     {
-      System.out.println("AMQ Connected successfully");
-      System.out.println(led);
+      log.info("{} - AMQ Connected successfully", robotName);
       led.set(1);
     }  
     // Main loop:
@@ -339,19 +339,16 @@ public class JavaController {
 
       try {
 
-        if (amqConnectionEstablished) {
-        }
-
         TextMessage receivedMessage = (TextMessage) messageConsumer.receive(1000L);
 
         if (receivedMessage == null) {
-          System.out.println("Message not received within timeout");
+          log.debug("{} - Message not received within timeout", robotName);
         } else {
-          System.out.println(receivedMessage.getText());
+          log.info ("{} - Recieved message", robotName );
 
           RobotCommand robotCommand = jsonb.fromJson(receivedMessage.getText(), RobotCommand.class);
 
-          System.out.println("Received AMQ Command -> " + robotCommand);
+          log.info("{} - Received AMQ Command -> {}", robotName, robotCommand);
 
           if (robotCommand.getCommand().equals("forward"))
             forward(robot, timeStep, Double.valueOf(robotCommand.getParameter()));
@@ -368,7 +365,7 @@ public class JavaController {
         }
 
       } catch (JMSException e1) {
-        System.err.println("Error proccessing AMQ Message");
+        log.info("{} - Error proccessing AMQ Message", robotName);
         e1.printStackTrace();
       }
 
@@ -377,7 +374,7 @@ public class JavaController {
     try {
       Thread.sleep(1000);
     } catch (InterruptedException e) {
-      e.printStackTrace();
+      log.error("{} - A general error occured", robotName, e);
     }
   }
   
@@ -395,7 +392,7 @@ public class JavaController {
     String answer = jsonb.toJson(responseRobotCommand);
     response.setText(answer);
     response.setJMSCorrelationID(receivedMessage.getJMSCorrelationID());
-    System.out.println("Replying with AMQ Command -> " + responseRobotCommand);
+    log.info("{} - Replying with AMQ Command -> {}", robotName, responseRobotCommand);
     replyProducer.send(receivedMessage.getJMSReplyTo(), response);
   }
 
