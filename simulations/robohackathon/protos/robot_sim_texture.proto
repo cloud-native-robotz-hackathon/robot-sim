@@ -1,10 +1,9 @@
 #VRML_OBJ R2020a utf8
-PROTO robot_sim [
+PROTO robot_sim_texture [
   field SFVec3f    position   0 0.0949489 0
   field SFRotation rotation      0 1 0 0
   field SFString   name          "name"
   field SFString   customdata    "port"
-  field SFColor    basecolor      0 0 1
 ]
 
 {
@@ -202,6 +201,7 @@ PROTO robot_sim [
               children [
                 Shape {
                   appearance PBRAppearance {
+                    baseColor 1 0 0
                     roughness 0.3
                     metalness 0
                   }
@@ -284,7 +284,12 @@ PROTO robot_sim [
               children [
                 DEF TOP_SHAPE Shape {
                   appearance PBRAppearance {
-                    baseColor IS basecolor
+                    baseColor 0.745098 0.745098 0.745098
+                    baseColorMap ImageTexture {
+                      url [
+                        "textures/top_3dx_terminator.jpg"
+                      ]
+                    }
                     roughness 0.25
                     metalness 0
                     normalMap ImageTexture {
