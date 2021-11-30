@@ -1,4 +1,5 @@
 jndi.properties
+*.log
 *.wbproj
 *.cache
 scratch_dev
@@ -9,3 +10,4 @@ scratch_dev
 .project
 settings.json
 *.bak
+simulations/robohackathon/controllers/JavaController/logback copy.xml

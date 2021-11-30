@@ -22,10 +22,18 @@ java.naming.factory.initial = org.apache.qpid.jms.jndi.JmsInitialContextFactory
 
 # Define the required ConnectionFactory instances
 # connectionfactory.<JNDI-lookup-name> = <URI>
-connectionfactory.myFactoryLookup = <AMQ BROKER ADDRESS>
+connectionfactory.terminatorFactoryLookup = amqps://<TERMINATOR_AMQ_BROKER_URI>:443?sslEnabled=true&transport.trustAll=true
+queue.terminatorQueueLookup = terminatorQueue
+topic.terminatorTopicLookup = terminatorQueue
 
-# Configure the necessary Queue and Topic objects
-# queue.<JNDI-lookup-name> = <queue-name>
-# topic.<JNDI-lookup-name> = <topic-name>
-queue.myQueueLookup = hello
-topic.myTopicLookup = hello
+connectionfactory.r2d2FactoryLookup = amqps://<R2D2_AMQ_BROKER_URI>:443?sslEnabled=true&transport.trustAll=true
+queue.r2d2QueueLookup = r2d2Queue
+topic.r2d2TopicLookup = r2d2Queue
+
+connectionfactory.marvinFactoryLookup = amqps://<T1000_AMQ_BROKER_URI>:443?sslEnabled=true&transport.trustAll=true
+queue.marvinQueueLookup = t1000Queue
+topic.marvinTopicLookup = t1000Queue
+
+connectionfactory.c3poFactoryLookup = amqps://<C3PO_AMQ_BROKER_URI>:443?sslEnabled=true&transport.trustAll=true
+queue.c3poQueueLookup = c3poQueue
+topic.c3poTopicLookup = c3poQueue
