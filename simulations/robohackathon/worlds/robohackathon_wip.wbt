@@ -1,0 +1,278 @@
+#VRML_SIM R2021b utf8
+WorldInfo {
+  coordinateSystem "NUE"
+  contactProperties [
+    ContactProperties {
+      coulombFriction [
+        3
+      ]
+    }
+  ]
+}
+Viewpoint {
+  orientation 0.922095517567405 0.36278030065458683 0.13464883935284117 5.51783861431597
+  position -2.4397600587317307 9.092980574340013 10.128413879179117
+}
+Background {
+  skyColor [
+    1 1 1
+  ]
+}
+DirectionalLight {
+  ambientIntensity 1
+  direction 0.1 -0.5 0.3
+}
+RectangleArena {
+  translation 0 0 -0.01
+  name "arena"
+  floorSize 10 10
+  floorTileSize 2 2
+  floorAppearance PBRAppearance {
+    baseColorMap ImageTexture {
+      url [
+        "textures/parquetry/chequered_parquetry_black_white_shadowman2.jpg"
+      ]
+    }
+    roughness 1
+    roughnessMap ImageTexture {
+      url [
+        "textures/parquetry/chequered_parquetry_roughness.jpg"
+      ]
+    }
+    metalness 0
+    normalMap ImageTexture {
+      url [
+        "textures/parquetry/chequered_parquetry_normal.jpg"
+      ]
+    }
+    occlusionMap ImageTexture {
+      url [
+        "textures/parquetry/chequered_parquetry_occlusion.jpg"
+      ]
+    }
+  }
+  wallHeight 0.3
+  wallAppearance PBRAppearance {
+    baseColor 0.666667 0 0
+    roughness 1
+    metalness 0
+  }
+}
+Shape {
+  appearance PBRAppearance {
+    baseColor 0.666667 0 0
+    roughness 1
+    metalness 0
+    emissiveIntensity 0
+  }
+  geometry Box {
+    size 2 0.001 2
+  }
+  castShadows FALSE
+  isPickable FALSE
+}
+robot_sim {
+  position 4.24 0.0949489 0
+  rotation 0 1 0 1.5707996938995747
+  name "terminator"
+  customdata "3001"
+}
+robot_sim {
+  position -3.96 0.0949489 0
+  rotation 0 1 0 -1.57
+  name "marvin"
+  customdata "3002"
+}
+robot_sim {
+  position 0 0.0949489 4.03
+  name "r3d2"
+  customdata "3003"
+}
+robot_sim {
+  position 0 0.0949489 -4.01
+  rotation 0 1 0 3.14159
+  name "willy"
+  customdata "3004"
+}
+DEF WALL1_tpl Solid {
+  translation 0 0.25 -2.95
+  children [
+    DEF WALL_SHAPE Shape {
+      appearance PBRAppearance {
+        baseColor 0.666667 0 0
+        roughness 1
+        metalness 0
+      }
+      geometry Box {
+        size 2 0.5 0.1
+      }
+    }
+  ]
+  name "wall"
+  boundingObject USE WALL_SHAPE
+}
+DEF WALL2 Solid {
+  translation 0 0.25 2.96
+  children [
+    USE WALL_SHAPE
+  ]
+  name "WALL2"
+  boundingObject USE WALL_SHAPE
+}
+DEF WALL3 Solid {
+  translation 2.95 0.25 -1.0836e-05
+  rotation 0 1 0 1.5708
+  children [
+    USE WALL_SHAPE
+  ]
+  boundingObject USE WALL_SHAPE
+}
+DEF WALL4 Solid {
+  translation -2.95 0.25 1.08367e-05
+  rotation 0 1 0 1.5708
+  children [
+    USE WALL_SHAPE
+  ]
+  name "solid(1)"
+  boundingObject USE WALL_SHAPE
+}
+DEF WALLSMALL1_tpl Solid {
+  translation 1.5 0.25 -1.95
+  children [
+    DEF WALLSMALL_SHAPE Shape {
+      appearance PBRAppearance {
+        baseColor 0.666667 0 0
+        roughness 1
+        metalness 0
+      }
+      geometry Box {
+        size 1 0.5 0.1
+      }
+    }
+  ]
+  name "wall(1)"
+  boundingObject USE WALLSMALL_SHAPE
+}
+DEF WALLSMALL2 Solid {
+  translation 1.52 0.25 1.95
+  children [
+    DEF WALLSMALL_SHAPE Shape {
+      appearance PBRAppearance {
+        baseColor 0.666667 0 0
+        roughness 1
+        metalness 0
+      }
+      geometry Box {
+        size 1 0.5 0.1
+      }
+    }
+  ]
+  name "wall(3)"
+  boundingObject USE WALLSMALL_SHAPE
+}
+DEF WALLSMALL2_tpl Solid {
+  translation 1.95 0.25 -1.50001
+  rotation 0 1 0 1.5708
+  children [
+    DEF WALLSMALL_SHAPE Shape {
+      appearance PBRAppearance {
+        baseColor 0.666667 0 0
+        roughness 1
+        metalness 0
+      }
+      geometry Box {
+        size 1 0.5 0.1
+      }
+    }
+  ]
+  name "wall(2)"
+  boundingObject USE WALLSMALL_SHAPE
+}
+DEF WALLSMALL2 Solid {
+  translation 1.97 0.25 1.5
+  rotation 0 1 0 1.5708
+  children [
+    DEF WALLSMALL_SHAPE Shape {
+      appearance PBRAppearance {
+        baseColor 0.666667 0 0
+        roughness 1
+        metalness 0
+      }
+      geometry Box {
+        size 1 0.5 0.1
+      }
+    }
+  ]
+  name "wall(4)"
+  boundingObject USE WALLSMALL_SHAPE
+}
+DEF WALLSMALL3 Solid {
+  translation -1.95 0.25 -1.50001
+  rotation 0 1 0 1.5708
+  children [
+    DEF WALLSMALL_SHAPE Shape {
+      appearance PBRAppearance {
+        baseColor 0.666667 0 0
+        roughness 1
+        metalness 0
+      }
+      geometry Box {
+        size 1 0.5 0.1
+      }
+    }
+  ]
+  name "wall(5)"
+  boundingObject USE WALLSMALL_SHAPE
+}
+DEF WALLSMALL3 Solid {
+  translation -1.5 0.25 -1.95
+  children [
+    DEF WALLSMALL_SHAPE Shape {
+      appearance PBRAppearance {
+        baseColor 0.666667 0 0
+        roughness 1
+        metalness 0
+      }
+      geometry Box {
+        size 1 0.5 0.1
+      }
+    }
+  ]
+  name "wall(6)"
+  boundingObject USE WALLSMALL_SHAPE
+}
+DEF WALLSMALL4 Solid {
+  translation -1.5 0.25 1.94
+  children [
+    DEF WALLSMALL_SHAPE Shape {
+      appearance PBRAppearance {
+        baseColor 0.666667 0 0
+        roughness 1
+        metalness 0
+      }
+      geometry Box {
+        size 1 0.5 0.1
+      }
+    }
+  ]
+  name "wall(7)"
+  boundingObject USE WALLSMALL_SHAPE
+}
+DEF WALLSMALL2_tpl Solid {
+  translation -1.95 0.25 1.48999
+  rotation 0 1 0 1.5708
+  children [
+    DEF WALLSMALL_SHAPE Shape {
+      appearance PBRAppearance {
+        baseColor 0.666667 0 0
+        roughness 1
+        metalness 0
+      }
+      geometry Box {
+        size 1 0.5 0.1
+      }
+    }
+  ]
+  name "wall(8)"
+  boundingObject USE WALLSMALL_SHAPE
+}
