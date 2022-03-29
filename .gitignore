@@ -5,6 +5,7 @@ jndi.properties
 scratch_dev
 *.class
 !RobotCommand.class
+!JavaController*.class
 .classpath
 *.prefs
 .project
