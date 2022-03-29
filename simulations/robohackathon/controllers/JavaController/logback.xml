@@ -19,11 +19,10 @@
             <!-- 60 days to keep -->
             <maxHistory>5</maxHistory>
         </rollingPolicy>
+    </appender>   
 
     <root level="INFO">
         <appender-ref ref="STDOUT" />
-    </root>
-    <logger level="INFO" additivity="false" > 
-        <appender-ref ref="FILE" /> 
-    </logger> 
-</configur
+        <appender-ref ref="FILE-ROLLING" /> 
+    </root>    
+</configuration>

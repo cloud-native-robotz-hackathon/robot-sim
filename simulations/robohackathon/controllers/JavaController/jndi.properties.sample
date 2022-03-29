@@ -30,9 +30,9 @@ connectionfactory.r2d2FactoryLookup = amqps://<R2D2_AMQ_BROKER_URI>:443?sslEnabl
 queue.r2d2QueueLookup = r2d2Queue
 topic.r2d2TopicLookup = r2d2Queue
 
-connectionfactory.marvinFactoryLookup = amqps://<T1000_AMQ_BROKER_URI>:443?sslEnabled=true&transport.trustAll=true
-queue.marvinQueueLookup = t1000Queue
-topic.marvinTopicLookup = t1000Queue
+connectionfactory.marvinFactoryLookup = amqps://<MARVIN_AMQ_BROKER_URI>:443?sslEnabled=true&transport.trustAll=true
+queue.marvinQueueLookup = marvinQueue
+topic.marvinTopicLookup = marvinQueue
 
 connectionfactory.c3poFactoryLookup = amqps://<C3PO_AMQ_BROKER_URI>:443?sslEnabled=true&transport.trustAll=true
 queue.c3poQueueLookup = c3poQueue
