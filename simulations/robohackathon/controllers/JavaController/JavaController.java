@@ -90,7 +90,7 @@ public class JavaController {
 
       worldDistance = worldDistance * DRIVE_FACTOR;
 
-      log.info("Action -> Forward " + worldDistance);
+      log.info("{} - Action -> Forward {}", robotName, worldDistance);
 
       robotStep(robot, timeStep);
 
@@ -113,7 +113,12 @@ public class JavaController {
       }
       log.info("{} - Action -> Done", robotName);
 
-    } finally {
+    }
+      catch(Exception e)
+    {
+      log.er
+    }
+    finally {
       lock.unlock();
     }
   }

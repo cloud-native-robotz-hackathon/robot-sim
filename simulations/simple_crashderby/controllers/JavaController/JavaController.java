@@ -113,7 +113,13 @@ public class JavaController {
       }
       log.info("{} - Action -> Done", robotName);
 
-    } finally {
+    } 
+    catch (Exception e)
+    {
+      log.error(robotName + "- Error -> Forward ->" + e.getMessage(), e);
+    }
+
+    finally {
       lock.unlock();
     }
   }
@@ -146,7 +152,12 @@ public class JavaController {
       }
       log.info("{} - Action -> Done", robotName);
 
-    } finally {
+    } 
+    catch (Exception e)
+    {
+      log.error(robotName + "- Error -> Right ->" + e.getMessage(), e);
+    }
+    finally {
       lock.unlock();
     }
   }
@@ -177,7 +188,12 @@ public class JavaController {
       }
       log.info("{} - Action -> Done", robotName);
 
-    } finally {
+    } 
+    catch (Exception e)
+    {
+      log.error(robotName + "- Error -> Left ->" + e.getMessage(), e);
+    }
+    finally {
       lock.unlock();
     }
   }
@@ -209,7 +225,10 @@ public class JavaController {
       log.info("{} Action -> Done", robotName);
 
     }
-
+    catch (Exception e)
+    {
+      log.error(robotName + "- Error -> Back ->" + e.getMessage(), e);
+    }
     finally {
       lock.unlock();
     }
