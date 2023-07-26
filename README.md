@@ -1,5 +1,7 @@
 # Virtual Robots for the Robot Hackathon
 
+## ARCHIVED VERSION : Check the aktive repos for the current version
+
 This repository is hosting our attempts to use the Open Source robot simulator **Webots** (www.cyberbotics.com).
 
 ## Goal
